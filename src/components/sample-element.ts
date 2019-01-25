@@ -1,16 +1,15 @@
-import { LitElement, html, property } from "lit-element";
-import "@polymer/iron-dropdown/iron-dropdown.js";
-
-import i18next from "i18next";
+import { LitElement, html, property, TemplateResult } from "lit-element";
 
 import { connect } from "pwa-helpers/connect-mixin.js";
 
+import "@polymer/iron-dropdown/iron-dropdown.js";
+
+import { i18next, localize } from "../localisation.js";
 import { store, RootState } from "../store.js";
 
-// import form, { nameLastRomajiHiddenSelector } from "../reducers/form.js";
+class SampleElementConnected extends connect(store)(LitElement) {}
 
-class SampleElement extends connect(store)(LitElement) {
-  // class SampleElement extends LitElement {
+class SampleElement extends localize(i18next)(SampleElementConnected) {
   @property({ type: Boolean })
   private _opened = false;
 
@@ -18,10 +17,10 @@ class SampleElement extends connect(store)(LitElement) {
   private _openButtonHidden = false;
 
   @property({ type: String })
-  private _appLanguage = "";
+  private _appLanguage = "en";
 
   @property({ type: String })
-  private _customerLanguage = "";
+  private _customerLanguage = "en";
 
   @property({ type: Boolean })
   private _nameLastRomajiHidden = true;
@@ -30,8 +29,9 @@ class SampleElement extends connect(store)(LitElement) {
     this._opened = !this._opened;
   }
 
-  render() {
+  public render(): TemplateResult {
     return html`
+      <link rel="stylesheet" href="style.css" />
       <style>
         :host {
           box-sizing: border-box;
@@ -112,13 +112,13 @@ class SampleElement extends connect(store)(LitElement) {
             <input
               id="name-first"
               name="name-first"
-              placeholder="First name"
+              placeholder="${i18next.t("form.name-first")}"
               type="text"
             />
             <input
               id="name-last"
               name="name-last"
-              placeholder="Last name"
+              placeholder="${i18next.t("form.name-last")}"
               type="text"
             />
             <input
@@ -128,8 +128,15 @@ class SampleElement extends connect(store)(LitElement) {
               placeholder="Last name (Romaji)"
               type="text"
             />
-            <input id="email" name="email" placeholder="Email" type="email" />
-            <label for="date-of-birth-alternate">Date of birth</label>
+            <input
+              id="email"
+              name="email"
+              placeholder="${i18next.t("form.email")}"
+              type="email"
+            />
+            <label for="date-of-birth-alternate"
+              >${i18next.t("form.date-of-birth.label")}</label
+            >
             <input
               id="date-of-birth-alternate"
               min="1918-01-01"
@@ -139,12 +146,12 @@ class SampleElement extends connect(store)(LitElement) {
               value="2018-07-22"
             />
             <fieldset>
-              <legend>Date of birth</legend>
+              <legend>${i18next.t("form.date-of-birth.label")}</legend>
               <div id="date-of-birth">
                 <div id="day-wrapper">
-                  <label for="day"
-                    >${i18next.t("form.date_of_birth.day")}</label
-                  >
+                  <label for="day">
+                    ${i18next.t("form.date-of-birth.day")}
+                  </label>
                   <select id="day" name="day">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -180,7 +187,9 @@ class SampleElement extends connect(store)(LitElement) {
                   </select>
                 </div>
                 <div id="month-wrapper">
-                  <label for="month">Month</label>
+                  <label for="month"
+                    >${i18next.t("form.date-of-birth.month")}</label
+                  >
                   <select id="month" name="month">
                     <option value="January">January</option>
                     <option value="February">February</option>
@@ -197,7 +206,9 @@ class SampleElement extends connect(store)(LitElement) {
                   </select>
                 </div>
                 <div id="year-wrapper">
-                  <label for="year">Year</label>
+                  <label for="year"
+                    >${i18next.t("form.date-of-birth.year")}</label
+                  >
                   <select id="year" name="year">
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -330,4 +341,7 @@ class SampleElement extends connect(store)(LitElement) {
     // this._nameLastRomajiHidden = nameLastRomajiHiddenSelector(state);
   }
 }
+
+// Object.assign(SampleElement.prototype, connect(store)(LitElement));
+
 customElements.define("sample-element", SampleElement);

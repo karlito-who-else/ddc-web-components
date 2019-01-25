@@ -1,13 +1,3 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
 import {
   LitElement,
   html,
@@ -45,15 +35,15 @@ import "@polymer/app-layout/app-toolbar/app-toolbar.js";
 import { menuIcon } from "./my-icons.js";
 import "./snack-bar.js";
 
-import i18next from "i18next";
-import Backend from "i18next-chained-backend";
-import LocalStorageBackend from "i18next-localstorage-backend"; // primary use cache
-import XHR from "i18next-xhr-backend"; // fallback xhr load
+import { i18next, localize } from "../localisation.js";
 
-class MyApp extends connect(store)(LitElement) {
+class MyAppConnected extends connect(store)(LitElement) {}
+
+class MyApp extends localize(i18next)(MyAppConnected) {
   protected render() {
     // Anything that's related to rendering should be done in here.
     return html`
+      <link rel="stylesheet" href="style.css" />
       <style>
         :host {
           --app-drawer-width: 256px;
@@ -293,29 +283,6 @@ class MyApp extends connect(store)(LitElement) {
 
   constructor() {
     super();
-
-    console.log("this._customerLanguage", this._customerLanguage);
-
-    i18next.use(Backend).init({
-      backend: {
-        backends: [
-          LocalStorageBackend, // primary
-          XHR // fallback
-        ],
-        backendOptions: [
-          {
-            /* below options */
-          },
-          {
-            loadPath: `/locales/{{lng}}/{{ns}}.json` // xhr load path for my own fallback
-          }
-        ]
-      },
-      initImmediate: false
-    });
-
-    const test = i18next.t("title"); // -> will return value
-    console.log("test", test);
 
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures

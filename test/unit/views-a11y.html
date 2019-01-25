@@ -8,17 +8,17 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>views a11y</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script>
       // Redux assumes `process.env.NODE_ENV` exists in the ES module build.
       // https://github.com/reactjs/redux/issues/2907
-      window.process = { env: { NODE_ENV: 'production' } };
+      window.process = { env: { NODE_ENV: "production" } };
     </script>
 
     <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
@@ -48,32 +48,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script type="module">
-      import '@polymer/test-fixture';
-      import 'axe-core/axe.min.js';
-      import {axeReport} from 'pwa-helpers/axe-report.js';
-      import '../../src/components/my-view1.js';
-      import '../../src/components/my-view2.js';
-      import '../../src/components/my-view3.js';
-      import '../../src/components/my-view404.js';
+      import "@polymer/test-fixture";
+      import "axe-core/axe.min.js";
+      import { axeReport } from "pwa-helpers/axe-report.js";
+      import "../../dist/components/my-view1.js";
+      import "../../dist/components/my-view2.js";
+      import "../../dist/components/my-view3.js";
+      import "../../dist/components/my-view404.js";
 
-      suite('views a11y tests', function() {
-        test('my-view1', function() {
-          const el = fixture('view1');
+      suite("views a11y tests", function() {
+        test("my-view1", function() {
+          const el = fixture("view1");
           return axeReport(el);
         });
 
-        test('my-view2', function() {
-          const el = fixture('view2');
+        test("my-view2", function() {
+          const el = fixture("view2");
           return axeReport(el);
         });
 
-        test('my-view3', function() {
-          const el = fixture('view3');
+        test("my-view3", function() {
+          const el = fixture("view3");
           return axeReport(el);
         });
 
-        test('my-view404', function() {
-          const el = fixture('view404');
+        test("my-view404", function() {
+          const el = fixture("view404");
           return axeReport(el);
         });
       });
