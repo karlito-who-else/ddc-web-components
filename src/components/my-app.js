@@ -7,12 +7,25 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+var __decorate =
+  (this && this.__decorate) ||
+  function(decorators, target, key, desc) {
+    var c = arguments.length,
+      r =
+        c < 3
+          ? target
+          : desc === null
+          ? (desc = Object.getOwnPropertyDescriptor(target, key))
+          : desc,
+      d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if ((d = decorators[i]))
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+  };
 import { LitElement, html, property } from "@polymer/lit-element";
 import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings.js";
 import { connect } from "pwa-helpers/connect-mixin.js";
@@ -23,7 +36,13 @@ import { updateMetadata } from "pwa-helpers/metadata.js";
 // This element is connected to the Redux store.
 import { store } from "../store.js";
 // These are the actions needed by this element.
-import { navigate, updateOffline, updateDrawerState, updateAppLanguage, updateCustomerLanguage } from "../actions/app.js";
+import {
+  navigate,
+  updateOffline,
+  updateDrawerState,
+  updateAppLanguage,
+  updateCustomerLanguage
+} from "../actions/app.js";
 // These are the elements needed by this element.
 import "@polymer/app-layout/app-drawer/app-drawer.js";
 import "@polymer/app-layout/app-header/app-header.js";
@@ -36,42 +55,42 @@ import Backend from "i18next-chained-backend";
 import LocalStorageBackend from "i18next-localstorage-backend"; // primary use cache
 import XHR from "i18next-xhr-backend"; // fallback xhr load
 class MyApp extends connect(store)(LitElement) {
-    constructor() {
-        super();
-        this.appTitle = "";
-        this._page = "";
-        this._drawerOpened = false;
-        this._snackbarOpened = false;
-        this._offline = false;
-        this._appLanguage = "en";
-        this._customerLanguage = "en";
-        console.log("this._customerLanguage", this._customerLanguage);
-        i18next.use(Backend).init({
-            backend: {
-                backends: [
-                    LocalStorageBackend,
-                    XHR // fallback
-                ],
-                backendOptions: [
-                    {
-                    /* below options */
-                    },
-                    {
-                        loadPath: `/locales/{{lng}}/{{ns}}.json` // xhr load path for my own fallback
-                    }
-                ]
-            },
-            initImmediate: false
-        });
-        const test = i18next.t("title"); // -> will return value
-        console.log("test", test);
-        // To force all event listeners for gestures to be passive.
-        // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
-        setPassiveTouchGestures(true);
-    }
-    render() {
-        // Anything that's related to rendering should be done in here.
-        return html `
+  constructor() {
+    super();
+    this.appTitle = "";
+    this._page = "";
+    this._drawerOpened = false;
+    this._snackbarOpened = false;
+    this._offline = false;
+    this._appLanguage = "en";
+    this._customerLanguage = "en";
+    console.log("this._customerLanguage", this._customerLanguage);
+    i18next.use(Backend).init({
+      backend: {
+        backends: [
+          LocalStorageBackend,
+          XHR // fallback
+        ],
+        backendOptions: [
+          {
+            /* below options */
+          },
+          {
+            loadPath: `/locales/{{lng}}/{{ns}}.json` // xhr load path for my own fallback
+          }
+        ]
+      },
+      initImmediate: false
+    });
+    const test = i18next.t("title"); // -> will return value
+    console.log("test", test);
+    // To force all event listeners for gestures to be passive.
+    // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
+    setPassiveTouchGestures(true);
+  }
+  render() {
+    // Anything that's related to rendering should be done in here.
+    return html`
       <style>
         :host {
           --app-drawer-width: 256px;
@@ -238,9 +257,27 @@ class MyApp extends connect(store)(LitElement) {
           id="app-language-selector"
           @change="${this._appLanguageSelectChanged}"
         >
-          <option value="en-GB">English (British)</option>
-          <option value="en-US">English (American)</option>
-          <option value="ar-SA">Arabic (Saudi Arabia)</option>
+          <option value="en-GB"
+            >${
+              i18next.t("language.en-GB", {
+                lng: this._appLanguage
+              })
+            }</option
+          >
+          <option value="en-US"
+            >${
+              i18next.t("language.en-US", {
+                lng: this._appLanguage
+              })
+            }</option
+          >
+          <option value="ar-SA"
+            >${
+              i18next.t("language.ar-SA", {
+                lng: this._appLanguage
+              })
+            }</option
+          >
         </select>
 
         <label for="customer-language-selector">Customer language</label>
@@ -248,9 +285,27 @@ class MyApp extends connect(store)(LitElement) {
           id="customer-language-selector"
           @change="${this._customerLanguageSelectChanged}"
         >
-          <option value="en-GB">English (British)</option>
-          <option value="en-US">English (American)</option>
-          <option value="ar-SA">Arabic (Saudi Arabia)</option>
+          <option value="en-GB"
+            >${
+              i18next.t("language.en-GB", {
+                lng: this._customerLanguage
+              })
+            }</option
+          >
+          <option value="en-US"
+            >${
+              i18next.t("language.en-US", {
+                lng: this._customerLanguage
+              })
+            }</option
+          >
+          <option value="ar-SA"
+            >${
+              i18next.t("language.ar-SA", {
+                lng: this._customerLanguage
+              })
+            }</option
+          >
         </select>
       </app-header>
 
@@ -286,70 +341,80 @@ class MyApp extends connect(store)(LitElement) {
       <span>App language is ${this._appLanguage}</span>
       <span>Customer language is ${this._customerLanguage}</span>
     `;
+  }
+  firstUpdated() {
+    installRouter(location =>
+      store.dispatch(navigate(decodeURIComponent(location.pathname)))
+    );
+    installOfflineWatcher(offline => store.dispatch(updateOffline(offline)));
+    installMediaQueryWatcher(`(min-width: 460px)`, () =>
+      store.dispatch(updateDrawerState(false))
+    );
+  }
+  updated(changedProps) {
+    if (changedProps.has("_page")) {
+      const pageTitle = this.appTitle + " - " + this._page;
+      updateMetadata({
+        title: pageTitle,
+        description: pageTitle
+        // This object also takes an image property, that points to an img src.
+      });
     }
-    firstUpdated() {
-        installRouter(location => store.dispatch(navigate(decodeURIComponent(location.pathname))));
-        installOfflineWatcher(offline => store.dispatch(updateOffline(offline)));
-        installMediaQueryWatcher(`(min-width: 460px)`, () => store.dispatch(updateDrawerState(false)));
-    }
-    updated(changedProps) {
-        if (changedProps.has("_page")) {
-            const pageTitle = this.appTitle + " - " + this._page;
-            updateMetadata({
-                title: pageTitle,
-                description: pageTitle
-                // This object also takes an image property, that points to an img src.
-            });
-        }
-    }
-    _menuButtonClicked() {
-        store.dispatch(updateDrawerState(true));
-    }
-    _drawerOpenedChanged(e) {
-        store.dispatch(updateDrawerState(e.target.opened));
-    }
-    _appLanguageUpdated(language) {
-        store.dispatch(updateAppLanguage(language));
-    }
-    _customerLanguageUpdated(language) {
-        store.dispatch(updateCustomerLanguage(language));
-    }
-    _appLanguageSelectChanged(event) {
-        // console.log("event", event);
-        this._appLanguageUpdated(event.target.value);
-    }
-    _customerLanguageSelectChanged(event) {
-        // console.log("event", event);
-        this._customerLanguageUpdated(event.target.value);
-    }
-    stateChanged(state) {
-        this._page = state.app.page;
-        this._offline = state.app.offline;
-        this._snackbarOpened = state.app.snackbarOpened;
-        this._drawerOpened = state.app.drawerOpened;
-        this._appLanguage = state.app.appLanguage;
-        this._customerLanguage = state.app.customerLanguage;
-    }
+  }
+  _menuButtonClicked() {
+    store.dispatch(updateDrawerState(true));
+  }
+  _drawerOpenedChanged(e) {
+    store.dispatch(updateDrawerState(e.target.opened));
+  }
+  _appLanguageUpdated(language) {
+    store.dispatch(updateAppLanguage(language));
+  }
+  _customerLanguageUpdated(language) {
+    store.dispatch(updateCustomerLanguage(language));
+  }
+  _appLanguageSelectChanged(event) {
+    // console.log("event", event);
+    this._appLanguageUpdated(event.target.value);
+  }
+  _customerLanguageSelectChanged(event) {
+    // console.log("event", event);
+    this._customerLanguageUpdated(event.target.value);
+  }
+  stateChanged(state) {
+    this._page = state.app.page;
+    this._offline = state.app.offline;
+    this._snackbarOpened = state.app.snackbarOpened;
+    this._drawerOpened = state.app.drawerOpened;
+    this._appLanguage = state.app.appLanguage;
+    this._customerLanguage = state.app.customerLanguage;
+  }
 }
-__decorate([
-    property({ type: String })
-], MyApp.prototype, "appTitle", void 0);
-__decorate([
-    property({ type: String })
-], MyApp.prototype, "_page", void 0);
-__decorate([
-    property({ type: Boolean })
-], MyApp.prototype, "_drawerOpened", void 0);
-__decorate([
-    property({ type: Boolean })
-], MyApp.prototype, "_snackbarOpened", void 0);
-__decorate([
-    property({ type: Boolean })
-], MyApp.prototype, "_offline", void 0);
-__decorate([
-    property({ type: String })
-], MyApp.prototype, "_appLanguage", void 0);
-__decorate([
-    property({ type: String })
-], MyApp.prototype, "_customerLanguage", void 0);
+__decorate([property({ type: String })], MyApp.prototype, "appTitle", void 0);
+__decorate([property({ type: String })], MyApp.prototype, "_page", void 0);
+__decorate(
+  [property({ type: Boolean })],
+  MyApp.prototype,
+  "_drawerOpened",
+  void 0
+);
+__decorate(
+  [property({ type: Boolean })],
+  MyApp.prototype,
+  "_snackbarOpened",
+  void 0
+);
+__decorate([property({ type: Boolean })], MyApp.prototype, "_offline", void 0);
+__decorate(
+  [property({ type: String })],
+  MyApp.prototype,
+  "_appLanguage",
+  void 0
+);
+__decorate(
+  [property({ type: String })],
+  MyApp.prototype,
+  "_customerLanguage",
+  void 0
+);
 window.customElements.define("my-app", MyApp);

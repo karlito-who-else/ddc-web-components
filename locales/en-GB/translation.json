@@ -3,5 +3,12 @@
   "content": "This is en-GB content",
   "figure": {
     "alt": "Lighthouse picture"
+  },
+  "language": {
+    "en": "(en-GB) English",
+    "en-GB": "(en-GB) English (British)",
+    "en-US": "(en-GB) English (American)",
+    "ar": "(en-GB) Arabic",
+    "ar-SA": "(en-GB) Arabic (SA)"
   }
 }

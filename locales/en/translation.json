@@ -10,5 +10,12 @@
   },
   "figure": {
     "alt": "Lighthouse picture"
+  },
+  "language": {
+    "en": "(en) English",
+    "en-GB": "(en) English (British)",
+    "en-US": "(en) English (American)",
+    "ar": "(en) Arabic",
+    "ar-SA": "(en) Arabic (SA)"
   }
 }

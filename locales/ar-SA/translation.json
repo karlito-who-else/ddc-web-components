@@ -3,5 +3,12 @@
   "content": "This is ar-SA content",
   "figure": {
     "alt": "Lighthouse picture"
+  },
+  "language": {
+    "en": "(ar-SA) English",
+    "en-GB": "(ar-SA) English (British)",
+    "en-US": "(ar-SA) English (American)",
+    "ar": "(ar-SA) Arabic",
+    "ar-SA": "(ar-SA) Arabic (SA)"
   }
 }
