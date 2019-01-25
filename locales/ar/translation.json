@@ -1,0 +1,14 @@
+{
+  "title": "أهلا بك",
+  "content": "This is ar content",
+  "form": {
+    "date_of_birth": {
+      "day": "يوم",
+      "month": "شهر",
+      "year": "عام"
+    }
+  },
+  "figure": {
+    "alt": "Lighthouse picture"
+  }
+}
