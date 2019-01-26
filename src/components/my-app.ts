@@ -11,6 +11,8 @@ import { installOfflineWatcher } from "pwa-helpers/network.js";
 import { installRouter } from "pwa-helpers/router.js";
 import { updateMetadata } from "pwa-helpers/metadata.js";
 
+import { SharedStyles } from "./shared-styles.js";
+
 // This element is connected to the Redux store.
 import { store, RootState } from "../store.js";
 
@@ -43,7 +45,7 @@ class MyApp extends localize(i18next)(MyAppConnected) {
   protected render() {
     // Anything that's related to rendering should be done in here.
     return html`
-      <link rel="stylesheet" href="style.css" />
+      ${SharedStyles}
       <style>
         :host {
           --app-drawer-width: 256px;

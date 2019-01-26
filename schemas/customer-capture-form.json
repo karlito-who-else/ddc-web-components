@@ -1,0 +1,104 @@
+{
+  "format": "grid",
+  "type": "object",
+  "options": {
+    "disable_edit_json": false,
+    "disable_properties": false
+  },
+  "properties": {
+    "first_name": {
+      "title": "first name",
+      "description": "Standard date field with flatpickr",
+      "type": "string",
+      "$ref": "#/definitions/name",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "${name} here...",
+          "class": "myclass"
+        }
+      }
+    },
+    "last_name": {
+      "title": "last name",
+      "description": "Standard date field with flatpickr",
+      "type": "string",
+      "$ref": "#/definitions/name",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "your name here...",
+          "class": "myclass"
+        }
+      }
+    },
+    "full_name": {
+      "title": "full name",
+      "description": "Standard date field with flatpickr",
+      "type": "string",
+      "$ref": "#/definitions/name",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "your name here...",
+          "class": "myclass"
+        }
+      },
+      "watch": {
+        "fname": "first_name",
+        "lname": "last_name"
+      }
+    },
+    "email_consent": {
+      "title": "Do you wish to receive emails?",
+      "description": "Standard date field with flatpickr",
+      "type": "boolean",
+      "format": "checkbox",
+      "options": {
+        "grid_columns": 12
+      }
+    },
+    "sdate": {
+      "type": "string",
+      "format": "date",
+      "title": "Date (String)",
+      "description": "Standard date field",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "Enter date"
+        }
+      }
+    },
+    "stime": {
+      "type": "string",
+      "format": "time",
+      "title": "Time (String)",
+      "description": "Standard time field",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "Enter time"
+        }
+      }
+    },
+    "sdatetime": {
+      "type": "string",
+      "format": "datetime-local",
+      "title": "Datetime (String)",
+      "description": "Standard datetime-local field",
+      "options": {
+        "grid_columns": 4,
+        "inputAttributes": {
+          "placeholder": "YYYY-MM-DD HH:SS"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "name": {
+      "type": "string",
+      "minLength": 2
+    }
+  }
+}

@@ -4,6 +4,8 @@ import { connect } from "pwa-helpers/connect-mixin.js";
 
 import "@polymer/iron-dropdown/iron-dropdown.js";
 
+import { SharedStyles } from "./shared-styles.js";
+
 import { i18next, localize } from "../localisation.js";
 import { store, RootState } from "../store.js";
 
@@ -31,7 +33,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
 
   public render(): TemplateResult {
     return html`
-      <link rel="stylesheet" href="style.css" />
+      ${SharedStyles}
       <style>
         :host {
           box-sizing: border-box;

@@ -1,0 +1,15 @@
+app-header {
+  text-transform: uppercase;
+}
+
+h2 {
+  text-align: right;
+}
+
+my-view1 {
+  background-color: red;
+}
+
+customer-capture-form {
+  width: 100%;
+}

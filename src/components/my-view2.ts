@@ -6,7 +6,7 @@ import { PageViewElement } from "./page-view-element.js";
 
 import { SharedStyles } from "./shared-styles.js";
 
-import "./sample-element.js";
+import "./customer-capture-form.js";
 
 import { i18next, localize } from "../localisation.js";
 import { store, RootState } from "../store.js";
@@ -18,9 +18,7 @@ class MyView2 extends localize(i18next)(MyView2Connected) {
     return html`
       ${SharedStyles}
       <style>
-        sample-element {
-          background-color: #eee;
-          width: 100%;
+        customer-capture-form {
         }
       </style>
       <section>
@@ -28,6 +26,7 @@ class MyView2 extends localize(i18next)(MyView2Connected) {
         <p>This is a text-only page.</p>
         <p>It doesn't do anything other than display some static text.</p>
       </section>
+      <customer-capture-form></customer-capture-form>
     `;
   }
 

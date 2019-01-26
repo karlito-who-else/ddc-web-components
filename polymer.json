@@ -6,8 +6,10 @@
     "locales/**/*.json",
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/normalize.css/normalize.css",
     "push-manifest.json",
-    "style.css"
+    "schemas/**/*.json",
+    "style/**/*.css"
   ],
   "builds": [
     {
