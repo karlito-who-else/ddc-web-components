@@ -8,7 +8,8 @@
   "properties": {
     "first_name": {
       "title": "first name",
-      "description": "Standard date field with flatpickr",
+      "description": "Standard date field with flatpickr ${name}",
+      "template": "{{fname}} {{lname}}",
       "type": "string",
       "$ref": "#/definitions/name",
       "options": {
@@ -22,6 +23,7 @@
     "last_name": {
       "title": "last name",
       "description": "Standard date field with flatpickr",
+      "template": "content",
       "type": "string",
       "$ref": "#/definitions/name",
       "options": {

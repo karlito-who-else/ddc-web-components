@@ -5,14 +5,13 @@ import {
   TemplateResult
 } from "lit-element";
 
-import { SharedStyles } from "./shared-styles.js";
-
 import { connect } from "pwa-helpers/connect-mixin.js";
+
+import { SharedStyles } from "./shared-styles.js";
 
 import { i18next, localize } from "../localisation.js";
 import { store, RootState } from "../store.js";
 
-// import JSONEditor from "@json-editor/json-editor";
 import "@json-editor/json-editor";
 
 class CustomerCaptureFormConnected extends connect(store)(LitElement) {}
@@ -53,14 +52,6 @@ class CustomerCaptureForm extends localize(i18next)(
 
     const schema = await this.formFields();
 
-    JSONEditor.defaults.editors.object.options.hidden = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_add = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_delete = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_reorder = true;
-    // JSONEditor.defaults.editors.object.options.disable_collapse = true;
-    // JSONEditor.defaults.editors.object.options.disable_edit_json = true;
-    // JSONEditor.defaults.editors.object.options.disable_properties = true;
-
     JSONEditor.defaults.themes.clean = function() {
       const theme = new JSONEditor.defaults.themes.barebones();
 
@@ -76,7 +67,24 @@ class CustomerCaptureForm extends localize(i18next)(
       return theme;
     };
 
+    const myengine = {
+      compile: function(template) {
+        console.log("template", template);
+        const translated = i18next.t(template);
+        console.log("translated", translated);
+        return translated;
+      }
+    };
+
+    JSONEditor.defaults.editors.object.options.hidden = true;
+    // JSONEditor.defaults.editors.object.options.disable_array_add = true;
+    // JSONEditor.defaults.editors.object.options.disable_array_delete = true;
+    // JSONEditor.defaults.editors.object.options.disable_array_reorder = true;
+    // JSONEditor.defaults.editors.object.options.disable_collapse = true;
+    // JSONEditor.defaults.editors.object.options.disable_edit_json = true;
+    // JSONEditor.defaults.editors.object.options.disable_properties = true;
     JSONEditor.defaults.options.theme = "clean";
+    JSONEditor.defaults.options.template = myengine;
 
     const options = {
       compact: true,
