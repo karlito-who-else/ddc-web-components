@@ -1,30 +1,30 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "country": {
-    "description": "lorem ipsum",
+    "description": "enter your country",
     "label": "country",
-    "placeholder": "enter country",
-    "title": "enter country"
+    "placeholder": "enter your country",
+    "title": "enter your country"
   },
   "date-of-birth": {
-    "label": "date of birth",
-    "day": "day",
-    "month": "month",
-    "year": "year"
+    "description": "enter your date-of-birth",
+    "label": "date-of-birth",
+    "placeholder": "enter your date-of-birth",
+    "title": "enter your date-of-birth"
   },
   "email": {
     "address": {
       "prompt": {
         "description": "lorem ipsum",
         "label": "email address",
-        "placeholder": "enter email address",
-        "title": "enter email address"
+        "placeholder": "enter your email address",
+        "title": "enter your email address"
       },
       "confirmation": {
         "description": "dolor sit",
         "label": "email address confirmation",
-        "placeholder": "confirm email address",
-        "title": "confirm email address"
+        "placeholder": "confirm your email address",
+        "title": "confirm your email address"
       }
     },
     "consent": {
@@ -46,12 +46,6 @@
       "label": "last name",
       "placeholder": "enter your last name",
       "title": "last name"
-    },
-    "full": {
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce elementum consequat consequat. Sed faucibus tortor dui, ut mollis elit iaculis eu. Phasellus at sem iaculis, malesuada ligula eget, ornare est. Donec pulvinar purus nec lacus cursus, in vehicula elit rhoncus. Phasellus tincidunt eleifend est, sit amet elementum ipsum pellentesque ut. Suspendisse et lorem arcu. Nullam sed tellus consectetur elit rutrum dignissim nec nec diam. Praesent quis felis eget felis laoreet fringilla. Maecenas sodales facilisis ligula, in rhoncus elit lacinia quis. Morbi eros neque, accumsan sit amet molestie auctor, accumsan et massa. In hac habitasse platea dictumst. Proin laoreet nibh eros, posuere maximus sem auctor ut. Suspendisse id risus tortor. Proin eu ipsum sapien. Aenean malesuada elementum eros, congue gravida lectus efficitur vitae.",
-      "label": "full name",
-      "placeholder": "enter your full name",
-      "title": "full name"
     }
   }
 }

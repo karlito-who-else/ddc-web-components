@@ -1,43 +1,52 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "date-of-birth": {
-    "label": "date of birth",
-    "day": "day",
-    "month": "month",
-    "year": "year"
+  "country": {
+    "description": "أدخل بلدك",
+    "label": "بلد",
+    "placeholder": "أدخل بلدك",
+    "title": "أدخل بلدك"
   },
+  "date-of-birth": {
+    "description": "أدخل تاريخ ميلادك",
+    "label": "تاريخ الولادة",
+    "placeholder": "أدخل تاريخ ميلادك",
+    "title": "أدخل تاريخ ميلادك"
+  },
+  "day": "day",
+  "month": "month",
+  "year": "year",
   "email": {
     "address": {
       "prompt": {
-        "description": "lorem ipsum",
-        "label": "email address",
-        "placeholder": "enter email address",
-        "title": "enter email address"
+        "description": "أدخل عنوان بريدك الالكتروني",
+        "label": "عنوان بريد الكتروني",
+        "placeholder": "أدخل عنوان بريدك الالكتروني",
+        "title": "أدخل عنوان بريدك الالكتروني"
       },
       "confirmation": {
-        "description": "dolor sit",
-        "label": "email address confirmation",
-        "placeholder": "confirm email address",
-        "title": "confirm email address"
+        "description": "أكد عنوان بريدك الألكتروني",
+        "label": "تأكيد عنوان البريد الإلكتروني",
+        "placeholder": "أكد عنوان بريدك الألكتروني",
+        "title": "أكد عنوان بريدك الألكتروني"
       }
     },
     "consent": {
-      "description": "We will not send you anything without your consent",
-      "label": "Do you wish to receive emails?",
-      "title": "Do you wish to receive emails?"
+      "description": "لن نرسل لك أي شيء دون موافقتك",
+      "label": "هل ترغب في تلقي رسائل البريد الإلكتروني؟",
+      "title": "هل ترغب في تلقي رسائل البريد الإلكتروني؟"
     }
   },
   "name": {
     "given": {
-      "description": "lorem ipsum",
+      "description": "الاسم الاول",
       "label": "الاسم الاول",
-      "placeholder": "enter your first name",
+      "placeholder": "أدخل اسمك الأول",
       "title": "الاسم الاول"
     },
     "family": {
-      "description": "dolor sit",
+      "description": "الكنية",
       "label": "الكنية",
-      "placeholder": "enter your last name",
+      "placeholder": "أدخل اسمك الأخير",
       "title": "الكنية"
     }
   }
