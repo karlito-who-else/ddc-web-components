@@ -2,6 +2,8 @@ import { LitElement, html, property, TemplateResult } from "lit-element";
 
 import { connect } from "pwa-helpers/connect-mixin.js";
 
+import { Validation } from "bunnyjs/src/Validation";
+
 import { SharedStyles } from "./shared-styles.js";
 
 import { i18next, localize } from "../localisation.js";
@@ -23,14 +25,15 @@ class CustomerCaptureForm extends localize(i18next)(
   @property({ type: TemplateResult })
   private _formFields;
 
+  @property({ type: HTMLElement })
+  private _formElement;
+
   private constructor() {
     super();
 
     this.renderForm();
 
-    i18next.on("languageChanged", () => {
-      this.renderForm();
-    });
+    this.addValidation();
   }
 
   public render(): TemplateResult {
@@ -43,8 +46,12 @@ class CustomerCaptureForm extends localize(i18next)(
           padding: 2rem;
         }
       </style>
-      <form dir="${i18next.dir(this._customerLanguage)}">
-        ${this._formFields}
+      <form
+        dir="${i18next.dir(this._customerLanguage)}"
+        id="customer-capture-form"
+        method="POST"
+      >
+        ${this._formFields} <button>Submit</button>
       </form>
     `;
   }
@@ -53,6 +60,10 @@ class CustomerCaptureForm extends localize(i18next)(
     await this.updateComplete;
 
     this._formFields = await this.formFields();
+
+    i18next.on("languageChanged", () => {
+      this.renderForm();
+    });
   };
 
   get updateComplete() {
@@ -76,6 +87,33 @@ class CustomerCaptureForm extends localize(i18next)(
 
     return markup;
   }
+
+  private addValidation: Function = async () => {
+    await this.updateComplete;
+
+    this._formElement = this.shadowRoot.getElementById("customer-capture-form");
+    // this._formElement = this.shadowRoot.querySelector("#customer-capture-form");
+
+    console.log(this._formElement);
+
+    this._formElement.onsubmit = event => {
+      console.log("submit", event);
+      event.preventDefault();
+    };
+
+    this._formElement.addEventListener("submit", event => {
+      console.log("submit", event);
+      event.preventDefault();
+    });
+
+    // this._formElement.on("submit", event => {
+    //   console.log("submit", event);
+    //   event.preventDefault();
+    // });
+
+    Validation.init(this._formElement, true);
+    // Validation.init(this.shadowRoot.form[0], true);
+  };
 
   stateChanged(state: RootState) {
     this._appLanguage = state.app!.appLanguage;

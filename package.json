@@ -25,6 +25,7 @@
     "@polymer/iron-dropdown": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.4",
+    "bunnyjs": "^0.14.41",
     "es6-deep-clone": "^1.1.1",
     "i18next": "^14.0.1",
     "i18next-chained-backend": "^0.1.2",
