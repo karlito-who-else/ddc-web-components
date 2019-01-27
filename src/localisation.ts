@@ -8,6 +8,7 @@ let _i18nextInitialized = false;
 i18next.use(XHRBackend).init({
   fallbackLng: "en",
   debug: true,
+  ns: ["common", "form", "translation"],
   // ns: ["app"],
   // defaultNS: "app",
   backend: {

@@ -1,9 +1,4 @@
-import {
-  LitElement,
-  html,
-  property,
-  PropertyValues
-} from "@polymer/lit-element";
+import { LitElement, html, property, PropertyValues } from "lit-element";
 import { setPassiveTouchGestures } from "@polymer/polymer/lib/utils/settings.js";
 import { connect } from "pwa-helpers/connect-mixin.js";
 import { installMediaQueryWatcher } from "pwa-helpers/media-query.js";
@@ -66,125 +61,6 @@ class MyApp extends localize(i18next)(MyAppConnected) {
           --app-drawer-text-color: var(--app-light-text-color);
           --app-drawer-selected-color: #78909c;
         }
-
-        app-header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          text-align: center;
-          background-color: var(--app-header-background-color);
-          color: var(--app-header-text-color);
-          border-bottom: 1px solid #eee;
-        }
-
-        .toolbar-top {
-          background-color: var(--app-header-background-color);
-        }
-
-        [main-title] {
-          font-family: "Pacifico";
-          text-transform: lowercase;
-          font-size: 30px;
-          /* In the narrow layout, the toolbar is offset by the width of the
-        drawer button, and the text looks not centered. Add a padding to
-        match that button */
-          padding-right: 44px;
-        }
-
-        .toolbar-list {
-          display: none;
-        }
-
-        .toolbar-list > a {
-          display: inline-block;
-          color: var(--app-header-text-color);
-          text-decoration: none;
-          line-height: 30px;
-          padding: 4px 24px;
-        }
-
-        .toolbar-list > a[selected] {
-          color: var(--app-header-selected-color);
-          border-bottom: 4px solid var(--app-header-selected-color);
-        }
-
-        .menu-btn {
-          background: none;
-          border: none;
-          fill: var(--app-header-text-color);
-          cursor: pointer;
-          height: 44px;
-          width: 44px;
-        }
-
-        .drawer-list {
-          box-sizing: border-box;
-          width: 100%;
-          height: 100%;
-          padding: 24px;
-          background: var(--app-drawer-background-color);
-          position: relative;
-        }
-
-        .drawer-list > a {
-          display: block;
-          text-decoration: none;
-          color: var(--app-drawer-text-color);
-          line-height: 40px;
-          padding: 0 24px;
-        }
-
-        .drawer-list > a[selected] {
-          color: var(--app-drawer-selected-color);
-        }
-
-        /* Workaround for IE11 displaying <main> as inline */
-        main {
-          display: block;
-        }
-
-        .main-content {
-          padding-top: 64px;
-          min-height: 100vh;
-        }
-
-        .page {
-          display: none;
-        }
-
-        .page[active] {
-          display: block;
-        }
-
-        footer {
-          padding: 24px;
-          background: var(--app-drawer-background-color);
-          color: var(--app-drawer-text-color);
-          text-align: center;
-        }
-
-        /* Wide layout: when the viewport width is bigger than 460px, layout
-      changes to a wide layout. */
-        @media (min-width: 460px) {
-          .toolbar-list {
-            display: block;
-          }
-
-          .menu-btn {
-            display: none;
-          }
-
-          .main-content {
-            padding-top: 107px;
-          }
-
-          /* The drawer button isn't shown in the wide layout, so we don't
-        need to offset the title */
-          [main-title] {
-            padding-right: 0px;
-          }
-        }
       </style>
 
       <!-- Header -->
@@ -207,25 +83,27 @@ class MyApp extends localize(i18next)(MyAppConnected) {
           <a ?selected="${this._page === "view3"}" href="/view3">View Three</a>
         </nav>
 
-        <label for="app-language-selector">App language</label>
-        <select
-          id="app-language-selector"
-          @change="${this._appLanguageSelectChanged}"
-        >
-          <option value="en-GB">English (British)</option>
-          <option value="en-US">English (American)</option>
-          <option value="ar-SA">Arabic (Saudi Arabia)</option>
-        </select>
+        <div language-settings>
+          <label for="app-language-selector">App language</label>
+          <select
+            id="app-language-selector"
+            @change="${this._appLanguageSelectChanged}"
+          >
+            <option value="en-GB">English (British)</option>
+            <option value="en-US">English (American)</option>
+            <option value="ar-SA">Arabic (Saudi Arabia)</option>
+          </select>
 
-        <label for="customer-language-selector">Customer language</label>
-        <select
-          id="customer-language-selector"
-          @change="${this._customerLanguageSelectChanged}"
-        >
-          <option value="en-GB">English (British)</option>
-          <option value="en-US">English (American)</option>
-          <option value="ar-SA">Arabic (Saudi Arabia)</option>
-        </select>
+          <label for="customer-language-selector">Customer language</label>
+          <select
+            id="customer-language-selector"
+            @change="${this._customerLanguageSelectChanged}"
+          >
+            <option value="en-GB">English (British)</option>
+            <option value="en-US">English (American)</option>
+            <option value="ar-SA">Arabic (Saudi Arabia)</option>
+          </select>
+        </div>
       </app-header>
 
       <!-- Drawer content -->
@@ -251,7 +129,7 @@ class MyApp extends localize(i18next)(MyAppConnected) {
         ></my-view404>
       </main>
 
-      <footer><p>Made with &hearts; by the Polymer team.</p></footer>
+      <footer><p>&copy; brand name</p></footer>
 
       <snack-bar ?active="${this._snackbarOpened}">
         You are now ${this._offline ? "offline" : "online"}.</snack-bar

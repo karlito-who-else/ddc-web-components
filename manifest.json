@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "DDC Web Components",
+  "short_name": "DDC Web Components",
+  "description": "DDC Web Components description",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#3f51b5",

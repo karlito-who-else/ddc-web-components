@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "date-of-birth": {
+    "label": "date of birth",
+    "day": "day",
+    "month": "month",
+    "year": "year"
+  },
+  "email": {
+    "address": {
+      "prompt": {
+        "description": "lorem ipsum",
+        "label": "email address",
+        "placeholder": "enter email address",
+        "title": "enter email address"
+      },
+      "confirmation": {
+        "description": "dolor sit",
+        "label": "email address confirmation",
+        "placeholder": "confirm email address",
+        "title": "confirm email address"
+      }
+    },
+    "consent": {
+      "description": "We will not send you anything without your consent",
+      "label": "Do you wish to receive emails?",
+      "title": "Do you wish to receive emails?"
+    }
+  },
+  "name": {
+    "given": {
+      "description": "lorem ipsum",
+      "label": "الاسم الاول",
+      "placeholder": "enter your first name",
+      "title": "الاسم الاول"
+    },
+    "family": {
+      "description": "dolor sit",
+      "label": "الكنية",
+      "placeholder": "enter your last name",
+      "title": "الكنية"
+    }
+  }
+}

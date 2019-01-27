@@ -1,17 +1,6 @@
 {
   "title": "Welcome",
   "content": "This is en content",
-  "form": {
-    "date-of-birth": {
-      "label": "date of birth",
-      "day": "day",
-      "month": "month",
-      "year": "year"
-    },
-    "email": "email",
-    "name-first": "First name",
-    "name-last": "Last name"
-  },
   "figure": {
     "alt": "Lighthouse picture"
   },

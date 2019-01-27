@@ -1,4 +1,4 @@
-import { html } from "@polymer/lit-element";
+import { html } from "lit-element";
 
 import { connect } from "pwa-helpers/connect-mixin.js";
 
@@ -19,7 +19,6 @@ class MyView1 extends localize(i18next)(MyView1Connected) {
       ${SharedStyles}
       <style>
         sample-element {
-          background-color: #eee;
           width: 100%;
         }
       </style>

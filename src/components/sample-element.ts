@@ -91,7 +91,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
         </div>
       </iron-dropdown>
 
-      <section
+      <div
         class="app"
         dir="${i18next.dir(this._appLanguage)}"
         lang="${this._appLanguage}"
@@ -104,7 +104,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
           Customer language: ${this._customerLanguage}
         </p>
 
-        <section
+        <div
           class="customer"
           dir="${i18next.dir(this._customerLanguage)}"
           lang="${this._customerLanguage}"
@@ -332,18 +332,15 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
               </div>
             </fieldset>
           </form>
-        </section>
-      </section>
+        </div>
+      </div>
     `;
   }
 
   stateChanged(state: RootState) {
     this._appLanguage = state.app!.appLanguage;
     this._customerLanguage = state.app!.customerLanguage;
-    // this._nameLastRomajiHidden = nameLastRomajiHiddenSelector(state);
   }
 }
-
-// Object.assign(SampleElement.prototype, connect(store)(LitElement));
 
 customElements.define("sample-element", SampleElement);

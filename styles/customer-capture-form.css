@@ -1,3 +1,27 @@
+form {
+  align-items: center;
+  display: grid;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  /* justify-items: end; */
+}
+
+label {
+  grid-column: auto / span 1;
+}
+
+input,
+select,
+textarea {
+  grid-column: auto / span 1;
+}
+
+form p {
+  color: #666;
+  grid-column: auto / span 2;
+  font-size: 0.75rem;
+}
+
 /* Fields */
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
@@ -49,31 +73,4 @@ input[type="text"] {
 button,
 input[type="submit"] {
   padding: 1rem 2rem;
-}
-
-#editor div[data-schemapath="root"] > h3 {
-  display: none;
-}
-
-#capture > div > div {
-  display: grid;
-  grid-row-gap: 1rem;
-}
-
-#capture .row {
-  display: grid;
-  grid-column-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-#capture .form-control {
-  align-items: center;
-  display: grid;
-  /* grid-template-columns: repeat(2, auto); */
-  /* justify-items: end; */
-}
-
-#capture .form-control p {
-  color: #666;
-  font-size: 0.75rem;
 }

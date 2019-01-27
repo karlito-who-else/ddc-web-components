@@ -1,9 +1,4 @@
-import {
-  LitElement,
-  html,
-  // property,
-  TemplateResult
-} from "lit-element";
+import { LitElement, html, property, TemplateResult } from "lit-element";
 
 import { connect } from "pwa-helpers/connect-mixin.js";
 
@@ -12,7 +7,7 @@ import { SharedStyles } from "./shared-styles.js";
 import { i18next, localize } from "../localisation.js";
 import { store, RootState } from "../store.js";
 
-import "@json-editor/json-editor";
+import { jsonSchemaToFormMarkup } from "../json-schema-to-form-markup.js";
 
 class CustomerCaptureFormConnected extends connect(store)(LitElement) {}
 
@@ -25,10 +20,17 @@ class CustomerCaptureForm extends localize(i18next)(
   //   @property({ type: String })
   //   private _customerLanguage = "en";
 
+  @property({ type: TemplateResult })
+  private _formFields;
+
   private constructor() {
     super();
 
     this.renderForm();
+
+    i18next.on("languageChanged", () => {
+      this.renderForm();
+    });
   }
 
   public render(): TemplateResult {
@@ -41,92 +43,16 @@ class CustomerCaptureForm extends localize(i18next)(
           padding: 2rem;
         }
       </style>
-      <div id="editor"></div>
+      <form dir="${i18next.dir(this._customerLanguage)}">
+        ${this._formFields}
+      </form>
     `;
   }
 
   private renderForm: Function = async () => {
     await this.updateComplete;
 
-    const element = this.shadowRoot!.querySelector("#editor");
-
-    const schema = await this.formFields();
-
-    JSONEditor.defaults.themes.clean = function() {
-      const theme = new JSONEditor.defaults.themes.barebones();
-
-      theme.getIndentedPanel = function() {
-        const el = document.createElement("form");
-
-        el.id = "capture";
-        el.style = el.style || {};
-
-        return el;
-      };
-
-      return theme;
-    };
-
-    const myengine = {
-      compile: function(template) {
-        console.log("template", template);
-        const translated = i18next.t(template);
-        console.log("translated", translated);
-        return translated;
-      }
-    };
-
-    JSONEditor.defaults.editors.object.options.hidden = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_add = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_delete = true;
-    // JSONEditor.defaults.editors.object.options.disable_array_reorder = true;
-    // JSONEditor.defaults.editors.object.options.disable_collapse = true;
-    // JSONEditor.defaults.editors.object.options.disable_edit_json = true;
-    // JSONEditor.defaults.editors.object.options.disable_properties = true;
-    JSONEditor.defaults.options.theme = "clean";
-    JSONEditor.defaults.options.template = myengine;
-
-    const options = {
-      compact: true,
-      disable_array_add: true,
-      disable_array_delete: true,
-      disable_array_reorder: true,
-      disable_collapse: true,
-      disable_edit_json: true,
-      disable_properties: true,
-      form_name_root: "capture",
-      schema
-    };
-
-    const editor = new JSONEditor(element, options);
-
-    editor.on("ready", () => {
-      const errors = editor.validate();
-
-      if (errors.length) {
-        console.error(errors);
-      } else {
-        console.info("It's valid!");
-      }
-
-      // editor.disable();
-
-      const name = editor.getEditor("root.first_name");
-
-      if (name) {
-        name.setValue("John Smith");
-
-        console.log(name.getValue());
-      }
-
-      // editor.on("change", event => {
-      //   console.log("change", event);
-      // });
-
-      // editor.watch("path.to.field", event => {
-      //   console.log("watch", event);
-      // });
-    });
+    this._formFields = await this.formFields();
   };
 
   get updateComplete() {
@@ -135,12 +61,20 @@ class CustomerCaptureForm extends localize(i18next)(
     })();
   }
 
-  async formFields() {
+  async loadFormSchema() {
     const response = await fetch("schemas/customer-capture-form.json");
 
     const json = await response.json();
 
     return json;
+  }
+
+  async formFields() {
+    const schema = await this.loadFormSchema();
+
+    const markup = jsonSchemaToFormMarkup(schema);
+
+    return markup;
   }
 
   stateChanged(state: RootState) {
