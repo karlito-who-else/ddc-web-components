@@ -1,4 +1,7 @@
 {
+  "$id": "https://example.com/form.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A representation of a form",
   "type": "object",
   "properties": {
     "name.given": {
@@ -37,9 +40,8 @@
         }
       }
     },
-    "name.full": {
-      "$ref": "#/definitions/name",
-      "type": "string",
+    "date-of-birth": {
+      "format": "date-time",
       "properties": {
         "class": {
           "const": "myclass",
@@ -51,10 +53,10 @@
         },
         "type": {
           "$ref": "#/definitions/type",
-          "const": "text"
-        },
-        "watch": { "const": ["name.given", "name.family"], "type": "string" }
-      }
+          "const": "date"
+        }
+      },
+      "type": "string"
     },
     "email.consent": {
       "type": "boolean",
@@ -73,6 +75,43 @@
         }
       }
     },
+    "email.address.prompt": {
+      "format": "email",
+      "properties": {
+        "class": {
+          "const": "myclass",
+          "type": "string"
+        },
+        "element": {
+          "$ref": "#/definitions/element",
+          "const": "input"
+        },
+        "type": {
+          "$ref": "#/definitions/type",
+          "const": "email"
+        }
+      },
+      "type": "string"
+    },
+    "email.address.confirmation": {
+      "format": "email",
+      "properties": {
+        "class": {
+          "const": "myclass",
+          "type": "string"
+        },
+        "element": {
+          "$ref": "#/definitions/element",
+          "const": "input"
+        },
+        "type": {
+          "$ref": "#/definitions/type",
+          "const": "email"
+        }
+      },
+      "type": "string",
+      "watch": { "const": ["email.address.prompt"], "type": "array" }
+    },
     "country": {
       "$ref": "#/definitions/country",
       "properties": {
@@ -83,10 +122,18 @@
         "element": {
           "$ref": "#/definitions/element",
           "const": "input"
+        },
+        "list": {
+          "const": "list"
+        },
+        "type": {
+          "$ref": "#/definitions/type",
+          "const": "text"
         }
       }
     }
   },
+  "required": ["familyName", "givenName"],
   "definitions": {
     "country": {
       "enum": [
@@ -363,6 +410,10 @@
         "const": "textarea",
         "type": "string"
       }
+    },
+    "email_address": {
+      "format": "email",
+      "type": "string"
     },
     "name": {
       "type": "string",
