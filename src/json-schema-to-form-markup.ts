@@ -11,14 +11,25 @@ i18next.on("languageChanged", lng => {
   console.log("languageChanged 123", lng);
 });
 
-const getBooleanMarkup = properties => html`
-  ${getLabelMarkup(properties)}<input
-    type="checkbox"
-    name="vehicle1"
-    value="Bike"
-  />
-  ${getDescriptionMarkup(properties)}
-`;
+// const getBooleanMarkup = properties => html`
+//   ${getLabelMarkup(properties)}<input
+//     class="${ifDefined(properties!.properties!.class!.const)}"
+//     type="checkbox"
+//     name="vehicle1"
+//     value="Bike"
+//   />
+//   ${getDescriptionMarkup(properties)}
+// `;
+
+// const getDateMarkup = properties => html`
+//   ${getLabelMarkup(properties)}<input
+//     class="${ifDefined(properties!.properties!.class!.const)}"
+//     type="checkbox"
+//     name="vehicle1"
+//     value="Bike"
+//   />
+//   ${getDescriptionMarkup(properties)}
+// `;
 
 const getDatalistMarkup = properties => html`
   <datalist id="${properties!.id}-list">
@@ -28,7 +39,12 @@ const getDatalistMarkup = properties => html`
 
 const getDescriptionMarkup = properties =>
   html`
-    <p data-description-for="${properties.id}">${properties.description}</p>
+    <p
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      data-description-for="${properties.id}"
+    >
+      ${properties.description}
+    </p>
   `;
 
 const getInputMarkup = properties => {
@@ -36,12 +52,16 @@ const getInputMarkup = properties => {
 
   return html`
     ${getLabelMarkup(properties)}<input
-      id="${properties!.id}"
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      id="${ifDefined(properties!.id)}"
       list="${ifDefined(list)}"
-      name="${properties!.id}"
-      placeholder="${properties!.placeholder}"
-      title="${properties!.title}"
-      type="${ifDefined(properties!.type)}"
+      maxlength="${ifDefined(properties!.maxlength)}"
+      minlength="${ifDefined(properties!.minlength)}"
+      name="${ifDefined(properties!.id)}"
+      placeholder="${ifDefined(properties!.placeholder)}"
+      required
+      title="${ifDefined(properties!.title)}"
+      type="${ifDefined(properties!.properties!.type!.const)}"
     />
     ${list ? getDatalistMarkup(properties) : undefined}
     ${getDescriptionMarkup(properties)}
@@ -64,6 +84,7 @@ const getOptionsMarkup = (properties: {
 
 const getSelectMarkup = properties => html`
   ${getLabelMarkup(properties)}<select
+    class="${ifDefined(properties!.properties!.class!.const)}"
     id="${properties!.id}"
     name="${properties!.id}"
     placeholder="${properties!.placeholder}"
@@ -75,18 +96,26 @@ const getSelectMarkup = properties => html`
 
 const getDefaultMarkup = properties =>
   html`
-    <span id="${properties!.id}">borked: ${properties!.label}</span> ${
-      getDescriptionMarkup(properties)
-    }
+    <span
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      id="${properties!.id}"
+      >borked: ${properties!.label}</span
+    >
+    ${getDescriptionMarkup(properties)}
   `;
 
 const getLabelMarkup = properties =>
   html`
-    <label for="${properties!.id}">${properties!.label}</label>
+    <label
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      for="${properties!.id}"
+      >${properties!.label}</label
+    >
   `;
 
 const getTextareaMarkup = properties => html`
   ${getLabelMarkup(properties)}<textarea
+    class="${ifDefined(properties!.properties!.class!.const)}"
     id="${properties!.id}"
     name="${properties!.id}"
     placeholder="${properties!.placeholder}"
@@ -95,31 +124,8 @@ const getTextareaMarkup = properties => html`
   ${getDescriptionMarkup(properties)}
 `;
 
-// const dereference = schema => {
-//   for (var property in schema.properties) {
-//     const $ref = schema.properties[property].$ref;
-
-//     if ($ref[0] == "#/") {
-//       const  = $ref.substring(1);
-
-//       const referencedProperties = `${property}.$ref`;
-//     } else {
-//       console.error("broken reference");
-//     }
-
-//     Object.assign(schema.properties[property].$ref, {
-//       description,
-//       id,
-//       label,
-//       placeholder,
-//       title
-//     });
-//   }
-// };
-
 export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
   const dereferenced = dereference(schema);
-  console.log("dereferenced", dereferenced);
 
   let fields: TemplateResult[] = [];
 
@@ -145,7 +151,12 @@ export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
       case "input":
         switch (properties!.type) {
           case "boolean":
-            field = getBooleanMarkup(properties);
+            // field = getBooleanMarkup(properties);
+            field = getInputMarkup(properties);
+            break;
+          case "date":
+            // field = getDateMarkup(properties);
+            field = getInputMarkup(properties);
             break;
           case "object":
             if (Array.isArray(properties!.enum)) {
