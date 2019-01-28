@@ -8,7 +8,7 @@ import { dereference } from "./jst";
 import { i18next } from "./localisation.js";
 
 i18next.on("languageChanged", lng => {
-  console.log("languageChanged 123", lng);
+  console.info("languageChanged", lng);
 });
 
 const getDatalistMarkup = properties => html`
@@ -40,7 +40,7 @@ const getInputMarkup = properties => {
       minlength="${ifDefined(properties!.minlength)}"
       name="${ifDefined(properties!.id)}"
       placeholder="${ifDefined(properties!.placeholder)}"
-      required
+      required="${ifDefined(properties!.required)}"
       title="${ifDefined(properties!.title)}"
       type="${ifDefined(properties!.properties!.type!.const)}"
     />
@@ -70,7 +70,7 @@ const getSelectMarkup = properties => html`
     id="${ifDefined(properties!.id)}"
     name="${ifDefined(properties!.id)}"
     placeholder="${ifDefined(properties!.placeholder)}"
-    required
+    required="${ifDefined(properties!.required)}"
     title="${ifDefined(properties!.title)}"
   >
     ${getOptionsMarkup(properties)}
@@ -104,7 +104,7 @@ const getTextareaMarkup = properties => html`
     id="${ifDefined(properties!.id)}"
     name="${ifDefined(properties!.id)}"
     placeholder="${ifDefined(properties!.placeholder)}"
-    required
+    required="${ifDefined(properties!.required)}"
     title="${ifDefined(properties!.title)}"
     type="${ifDefined(properties!.properties!.type!.const)}"
   ></textarea>
@@ -119,16 +119,25 @@ export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
   for (var property in dereferenced.properties) {
     const id = property;
 
-    const description = i18next.t(`form:${property}.description`);
-    const label = i18next.t(`form:${property}.label`);
-    const placeholder = i18next.t(`form:${property}.placeholder`);
-    const title = i18next.t(`form:${property}.title`);
+    const description = i18next.t(
+      `customer-capture-form:${property}.description`
+    );
+    const label = i18next.t(`customer-capture-form:${property}.label`);
+    const placeholder = i18next.t(
+      `customer-capture-form:${property}.placeholder`
+    );
+    const title = i18next.t(`customer-capture-form:${property}.title`);
+
+    const required = dereferenced.required.includes(property)
+      ? true
+      : undefined;
 
     const properties = Object.assign(dereferenced.properties[property], {
       description,
       id,
       label,
       placeholder,
+      required,
       title
     });
 
