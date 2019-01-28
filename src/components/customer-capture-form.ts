@@ -89,10 +89,12 @@ class CustomerCaptureForm extends localize(i18next)(
     this._formElement.addEventListener("submit", async event => {
       event.preventDefault();
 
-      const valid = event.path[0].checkValidity();
+      // const valid = event.path[0].checkValidity();
+      const valid = this._formElement.checkValidity();
       console.log("valid", valid);
 
-      const formData = new FormData(event.path[0]);
+      // const formData = new FormData(event.path[0]);
+      const formData = new FormData(this._formElement);
 
       const response = await fetch("http://localhost:8081/myForm", {
         method: "POST",
