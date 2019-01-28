@@ -178,7 +178,7 @@
       }
     }
   },
-  "required": ["familyName", "givenName"],
+  "required": ["name.given", "name.family"],
   "definitions": {
     "country": {
       "enum": [
