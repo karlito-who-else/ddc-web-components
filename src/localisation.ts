@@ -5,34 +5,28 @@ import XHRBackend from "i18next-xhr-backend"; // fallback xhr load
 
 let _i18nextInitialized = false;
 
-i18next.use(XHRBackend).init({
-  fallbackLng: "en",
-  debug: true,
-  ns: ["common", "form", "translation"],
-  // ns: ["app"],
-  // defaultNS: "app",
-  backend: {
-    loadPath: "locales/{{lng}}/{{ns}}.json"
-  }
-});
-
-// i18next.use(ChainedBackend).init({
-//   backend: {
-//     backends: [
-//       LocalStorageBackend, // primary
-//       XHRBackend // fallback
-//     ],
-//     backendOptions: [
-//       {
-//         /* below options */
-//       },
-//       {
-//         loadPath: `/locales/{{lng}}/{{ns}}.json` // xhr load path for my own fallback
-//       }
-//     ]
-//   },
-//   initImmediate: false
-// });
+i18next
+  // .use(ChainedBackend)
+  .use(XHRBackend)
+  .init({
+    fallbackLng: "en",
+    // debug: true,
+    ns: ["app", "customer-capture-form", "general"],
+    // ns: ["app"],
+    // defaultNS: "app",
+    backend: {
+      loadPath: "locales/{{lng}}/{{ns}}.json"
+      // backends: [
+      //   LocalStorageBackend, // primary
+      //   XHRBackend // fallback
+      // ],
+      // backendOptions: [
+      //   {
+      //     loadPath: `/locales/{{lng}}/{{ns}}.json`
+      //   }
+      // ]
+    }
+  });
 
 export { i18next };
 
@@ -48,8 +42,7 @@ export const localize = i18next => baseElement =>
 
     connectedCallback() {
       if (!_i18nextInitialized) {
-        i18next.on("initialized", options => {
-          console.log("options", options);
+        i18next.on("initialized", () => {
           _i18nextInitialized = true;
           this.requestUpdate();
         });

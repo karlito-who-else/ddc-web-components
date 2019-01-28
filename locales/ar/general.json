@@ -1,17 +1,6 @@
 {
   "title": "أهلا بك",
   "content": "This is ar content",
-  "form": {
-    "date-of-birth": {
-      "label": "تاريخ الولادة",
-      "day": "يوم",
-      "month": "شهر",
-      "year": "عام"
-    },
-    "email": "البريد الإلكتروني",
-    "name-first": "الاسم الاول",
-    "name-last": "الكنية"
-  },
   "figure": {
     "alt": "Lighthouse picture"
   },
