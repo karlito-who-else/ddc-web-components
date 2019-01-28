@@ -2,8 +2,6 @@ import { LitElement, html, property, TemplateResult } from "lit-element";
 
 import { connect } from "pwa-helpers/connect-mixin.js";
 
-import { Validation } from "bunnyjs/src/Validation";
-
 import { SharedStyles } from "./shared-styles.js";
 
 import { i18next, localize } from "../localisation.js";
@@ -16,12 +14,6 @@ class CustomerCaptureFormConnected extends connect(store)(LitElement) {}
 class CustomerCaptureForm extends localize(i18next)(
   CustomerCaptureFormConnected
 ) {
-  //   @property({ type: String })
-  //   private _appLanguage = "en";
-
-  //   @property({ type: String })
-  //   private _customerLanguage = "en";
-
   @property({ type: TemplateResult })
   private _formFields;
 
@@ -93,33 +85,29 @@ class CustomerCaptureForm extends localize(i18next)(
     await this.updateComplete;
 
     this._formElement = this.shadowRoot.getElementById("customer-capture-form");
-    // this._formElement = this.shadowRoot.querySelector("#customer-capture-form");
-
-    console.log(this._formElement);
-
-    this._formElement.onsubmit = event => {
-      console.log("submit", event);
-      event.preventDefault();
-    };
 
     this._formElement.addEventListener("submit", event => {
-      console.log("submit", event);
+      const valid = event.path[0].checkValidity();
+      console.log("valid", valid);
+
       event.preventDefault();
     });
 
-    // this._formElement.on("submit", event => {
-    //   console.log("submit", event);
-    //   event.preventDefault();
-    // });
+    setTimeout(() => {
+      this._emailPrompt = this.shadowRoot.getElementById(
+        "email.address.prompt"
+      );
+      console.log("this._emailPrompt", this._emailPrompt);
 
-    Validation.init(this._formElement, true);
-    // Validation.init(this.shadowRoot.form[0], true);
+      this._emailPrompt.addEventListener("invalid", event => {
+        console.log("event", event);
+      });
+    }, 500);
   };
 
   stateChanged(state: RootState) {
     this._appLanguage = state.app!.appLanguage;
     this._customerLanguage = state.app!.customerLanguage;
-    // this._nameLastRomajiHidden = nameLastRomajiHiddenSelector(state);
   }
 }
 
