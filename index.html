@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8" />
     <title>DDC Web Components</title>
-    <meta name="generator" content="PWA Starter Kit" />
+    <meta name="generator" content="LVMH Digital" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="DDC Web Components description" />
 
@@ -105,12 +105,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Add any global styles for body, document, etc. -->
     <style>
       @font-face {
-        font-family: "Pacifico";
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: 400;
-        src: local("Pacifico Regular"), local("Pacifico-Regular"),
-          url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCXYhjbSpvc47ee6xR_80Hnw.woff2)
-            format("woff2");
+        src: local("Roboto"),
+          url(https://fonts.googleapis.com/css?family=Roboto) format("woff2");
         /* THe browser draws the text immediately in the fallback font if the font
            isn't loaded, then swaps it with the webfont when it eventually loads
            See: https://developers.google.com/web/updates/2016/02/font-display
@@ -133,7 +132,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <noscript> Please enable JavaScript to view this website. </noscript>
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
     <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <!-- Built with love using PWA Starter Kit -->
     <script type="module" src="dist/components/my-app.js"></script>
   </body>
 </html>

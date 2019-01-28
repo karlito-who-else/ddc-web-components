@@ -39,6 +39,7 @@ class CustomerCaptureForm extends localize(i18next)(
   public render(): TemplateResult {
     return html`
       ${SharedStyles}
+      <link rel="stylesheet" href="/styles/customer-capture-form.css" />
       <style>
         :host {
           box-sizing: border-box;

@@ -74,3 +74,12 @@ button,
 input[type="submit"] {
   padding: 1rem 2rem;
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png);
+  background-position: calc(100% - 1rem);
+  background-repeat: no-repeat;
+}
