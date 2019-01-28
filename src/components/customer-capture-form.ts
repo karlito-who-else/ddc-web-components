@@ -86,18 +86,26 @@ class CustomerCaptureForm extends localize(i18next)(
 
     this._formElement = this.shadowRoot.getElementById("customer-capture-form");
 
-    this._formElement.addEventListener("submit", event => {
+    this._formElement.addEventListener("submit", async event => {
+      event.preventDefault();
+
       const valid = event.path[0].checkValidity();
       console.log("valid", valid);
 
-      event.preventDefault();
+      const formData = new FormData(event.path[0]);
+
+      const response = await fetch("http://localhost:8081/myForm", {
+        method: "POST",
+        body: formData
+      });
+
+      console.log("response.json()", response.json());
     });
 
     setTimeout(() => {
       this._emailPrompt = this.shadowRoot.getElementById(
         "email.address.prompt"
       );
-      console.log("this._emailPrompt", this._emailPrompt);
 
       this._emailPrompt.addEventListener("invalid", event => {
         console.log("event", event);
