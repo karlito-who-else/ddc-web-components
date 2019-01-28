@@ -1,15 +1,12 @@
 {
   "entrypoint": "index.html",
   "shell": "dist/components/my-app.js",
-  "sources": ["images/**/*"],
+  "sources": ["images/**/*", "locales/**/*", "schemas/**/*", "styles/**/*"],
   "extraDependencies": [
-    "locales/**/*.json",
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/normalize.css/normalize.css",
-    "push-manifest.json",
-    "schemas/**/*.json",
-    "style/**/*.css"
+    "push-manifest.json"
   ],
   "builds": [
     {
