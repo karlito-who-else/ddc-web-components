@@ -51,15 +51,19 @@ form p {
 }
 
 button,
-input,
-select {
+input:not([type="checkbox"]),
+select,
+textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-color: #fff;
   border: 1px solid #000;
   color: #000;
   font-size: 1rem;
-  padding: 1rem;
-  text-transform: uppercase;
   font-weight: normal;
+  max-width: 50vw;
+  padding: 1rem;
 }
 
 input {
@@ -76,10 +80,11 @@ input[type="submit"] {
 }
 
 select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png);
+  background-image: url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png);
   background-position: calc(100% - 1rem);
   background-repeat: no-repeat;
+}
+
+[dir="rtl"] select {
+  background-position: 1rem;
 }
