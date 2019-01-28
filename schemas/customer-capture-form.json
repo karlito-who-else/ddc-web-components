@@ -12,6 +12,10 @@
           "const": "myclass",
           "type": "string"
         },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
+        },
         "element": {
           "$ref": "#/definitions/element",
           "const": "input"
@@ -30,6 +34,10 @@
           "const": "myclass",
           "type": "string"
         },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
+        },
         "element": {
           "$ref": "#/definitions/element",
           "const": "input"
@@ -46,6 +54,10 @@
         "class": {
           "const": "myclass",
           "type": "string"
+        },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
         },
         "element": {
           "$ref": "#/definitions/element",
@@ -65,6 +77,10 @@
           "const": "myclass",
           "type": "string"
         },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
+        },
         "element": {
           "$ref": "#/definitions/element",
           "const": "input"
@@ -81,6 +97,10 @@
         "class": {
           "const": "myclass",
           "type": "string"
+        },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
         },
         "element": {
           "$ref": "#/definitions/element",
@@ -99,6 +119,10 @@
         "class": {
           "const": "myclass",
           "type": "string"
+        },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
         },
         "element": {
           "$ref": "#/definitions/element",
@@ -119,6 +143,10 @@
           "const": "myclass",
           "type": "string"
         },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
+        },
         "element": {
           "$ref": "#/definitions/element",
           "const": "input"
@@ -129,6 +157,23 @@
         "type": {
           "$ref": "#/definitions/type",
           "const": "text"
+        }
+      }
+    },
+    "region": {
+      "$ref": "#/definitions/country",
+      "properties": {
+        "class": {
+          "const": "myclass",
+          "type": "string"
+        },
+        "disabled": {
+          "const": false,
+          "type": "boolean"
+        },
+        "element": {
+          "$ref": "#/definitions/element",
+          "const": "select"
         }
       }
     }

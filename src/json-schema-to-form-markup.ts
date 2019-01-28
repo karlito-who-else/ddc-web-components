@@ -11,26 +11,6 @@ i18next.on("languageChanged", lng => {
   console.log("languageChanged 123", lng);
 });
 
-// const getBooleanMarkup = properties => html`
-//   ${getLabelMarkup(properties)}<input
-//     class="${ifDefined(properties!.properties!.class!.const)}"
-//     type="checkbox"
-//     name="vehicle1"
-//     value="Bike"
-//   />
-//   ${getDescriptionMarkup(properties)}
-// `;
-
-// const getDateMarkup = properties => html`
-//   ${getLabelMarkup(properties)}<input
-//     class="${ifDefined(properties!.properties!.class!.const)}"
-//     type="checkbox"
-//     name="vehicle1"
-//     value="Bike"
-//   />
-//   ${getDescriptionMarkup(properties)}
-// `;
-
 const getDatalistMarkup = properties => html`
   <datalist id="${properties!.id}-list">
     ${getOptionsMarkup(properties)}
@@ -53,6 +33,7 @@ const getInputMarkup = properties => {
   return html`
     ${getLabelMarkup(properties)}<input
       class="${ifDefined(properties!.properties!.class!.const)}"
+      disabled="${ifDefined(properties!.properties!.disabled!.const)}"
       id="${ifDefined(properties!.id)}"
       list="${ifDefined(list)}"
       maxlength="${ifDefined(properties!.maxlength)}"
@@ -85,14 +66,17 @@ const getOptionsMarkup = (properties: {
 const getSelectMarkup = properties => html`
   ${getLabelMarkup(properties)}<select
     class="${ifDefined(properties!.properties!.class!.const)}"
-    id="${properties!.id}"
-    name="${properties!.id}"
-    placeholder="${properties!.placeholder}"
-    title="${properties!.title}"
-    type="${properties!.properties!.type}"
-  ></select>
+    disabled="${ifDefined(properties!.properties!.disabled!.const)}"
+    id="${ifDefined(properties!.id)}"
+    name="${ifDefined(properties!.id)}"
+    placeholder="${ifDefined(properties!.placeholder)}"
+    required
+    title="${ifDefined(properties!.title)}"
+  >
+    ${getOptionsMarkup(properties)}
+  </select>
   ${getDescriptionMarkup(properties)}
-`; // handle options
+`;
 
 const getDefaultMarkup = properties =>
   html`
@@ -116,10 +100,13 @@ const getLabelMarkup = properties =>
 const getTextareaMarkup = properties => html`
   ${getLabelMarkup(properties)}<textarea
     class="${ifDefined(properties!.properties!.class!.const)}"
-    id="${properties!.id}"
-    name="${properties!.id}"
-    placeholder="${properties!.placeholder}"
-    title="${properties!.title}"
+    disabled="${ifDefined(properties!.properties!.disabled!.const)}"
+    id="${ifDefined(properties!.id)}"
+    name="${ifDefined(properties!.id)}"
+    placeholder="${ifDefined(properties!.placeholder)}"
+    required
+    title="${ifDefined(properties!.title)}"
+    type="${ifDefined(properties!.properties!.type!.const)}"
   ></textarea>
   ${getDescriptionMarkup(properties)}
 `;
@@ -145,17 +132,18 @@ export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
       title
     });
 
+    properties!.properties!.disabled!.const =
+      properties!.properties!.disabled!.const === "true" ? true : undefined;
+
     let field: TemplateResult;
 
     switch (properties!.properties!.element!.const) {
       case "input":
         switch (properties!.type) {
           case "boolean":
-            // field = getBooleanMarkup(properties);
             field = getInputMarkup(properties);
             break;
           case "date":
-            // field = getDateMarkup(properties);
             field = getInputMarkup(properties);
             break;
           case "object":
