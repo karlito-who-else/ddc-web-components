@@ -26,7 +26,7 @@ const getDefaultMarkup = properties =>
 const getDescriptionMarkup = properties =>
   html`
     <p
-      class="${ifDefined(properties!.properties!.class!.const)}"
+      class="description ${ifDefined(properties!.properties!.class!.const)}"
       data-for="${properties.id}"
     >
       ${properties.description}
@@ -35,33 +35,30 @@ const getDescriptionMarkup = properties =>
 
 const getFeedbackMarkup = properties =>
   html`
-    <div
-      class="${ifDefined(properties!.properties!.class!.const)}"
-      data-for="${properties!.id}"
-    >
-      Feedback
-    </div>
+    <div class="validation-error" data-for="${properties!.id}"></div>
   `;
 
 const getInputMarkup = properties => {
   const list = properties!.enum ? `${properties!.id}-list` : undefined;
 
   return html`
-    ${getLabelMarkup(properties)}<input
-      class="${ifDefined(properties!.properties!.class!.const)}"
-      disabled="${ifDefined(properties!.properties!.disabled!.const)}"
-      id="${ifDefined(properties!.id)}"
-      list="${ifDefined(list)}"
-      maxlength="${ifDefined(properties!.maxlength)}"
-      minlength="${ifDefined(properties!.minlength)}"
-      name="${ifDefined(properties!.id)}"
-      placeholder="${ifDefined(properties!.placeholder)}"
-      required="${ifDefined(properties!.required)}"
-      title="${ifDefined(properties!.title)}"
-      type="${ifDefined(properties!.properties!.type!.const)}"
-    />
-    ${list ? getDatalistMarkup(properties) : undefined}
-    ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+    <div class="form-group">
+      ${getLabelMarkup(properties)}<input
+        class="${ifDefined(properties!.properties!.class!.const)}"
+        disabled="${ifDefined(properties!.properties!.disabled!.const)}"
+        id="${ifDefined(properties!.id)}"
+        list="${ifDefined(list)}"
+        maxlength="${ifDefined(properties!.maxlength)}"
+        minlength="${ifDefined(properties!.minlength)}"
+        name="${ifDefined(properties!.id)}"
+        placeholder="${ifDefined(properties!.placeholder)}"
+        required="${ifDefined(properties!.required)}"
+        title="${ifDefined(properties!.title)}"
+        type="${ifDefined(properties!.properties!.type!.const)}"
+      />
+      ${list ? getDatalistMarkup(properties) : undefined}
+      ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+    </div>
   `;
 };
 
@@ -89,32 +86,36 @@ const getOptionsMarkup = (properties: {
 `;
 
 const getSelectMarkup = properties => html`
-  ${getLabelMarkup(properties)}<select
-    class="${ifDefined(properties!.properties!.class!.const)}"
-    disabled="${ifDefined(properties!.properties!.disabled!.const)}"
-    id="${ifDefined(properties!.id)}"
-    name="${ifDefined(properties!.id)}"
-    placeholder="${ifDefined(properties!.placeholder)}"
-    required="${ifDefined(properties!.required)}"
-    title="${ifDefined(properties!.title)}"
-  >
-    ${getOptionsMarkup(properties)}
-  </select>
-  ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+  <div class="form-group">
+    ${getLabelMarkup(properties)}<select
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      disabled="${ifDefined(properties!.properties!.disabled!.const)}"
+      id="${ifDefined(properties!.id)}"
+      name="${ifDefined(properties!.id)}"
+      placeholder="${ifDefined(properties!.placeholder)}"
+      required="${ifDefined(properties!.required)}"
+      title="${ifDefined(properties!.title)}"
+    >
+      ${getOptionsMarkup(properties)}
+    </select>
+    ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+  </div>
 `;
 
 const getTextareaMarkup = properties => html`
-  ${getLabelMarkup(properties)}<textarea
-    class="${ifDefined(properties!.properties!.class!.const)}"
-    disabled="${ifDefined(properties!.properties!.disabled!.const)}"
-    id="${ifDefined(properties!.id)}"
-    name="${ifDefined(properties!.id)}"
-    placeholder="${ifDefined(properties!.placeholder)}"
-    required="${ifDefined(properties!.required)}"
-    title="${ifDefined(properties!.title)}"
-    type="${ifDefined(properties!.properties!.type!.const)}"
-  ></textarea>
-  ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+  <div class="form-group">
+    ${getLabelMarkup(properties)}<textarea
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      disabled="${ifDefined(properties!.properties!.disabled!.const)}"
+      id="${ifDefined(properties!.id)}"
+      name="${ifDefined(properties!.id)}"
+      placeholder="${ifDefined(properties!.placeholder)}"
+      required="${ifDefined(properties!.required)}"
+      title="${ifDefined(properties!.title)}"
+      type="${ifDefined(properties!.properties!.type!.const)}"
+    ></textarea>
+    ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+  </div>
 `;
 
 export const jsonSchemaToFormMarkup = (

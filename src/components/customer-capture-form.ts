@@ -1,5 +1,7 @@
 import { LitElement, html, property, TemplateResult } from "lit-element";
 
+import ValidForm from "@pageclip/valid-form";
+
 import { SharedStyles } from "./shared-styles.js";
 
 import { i18nextCustomer, localize } from "../localisation.js";
@@ -42,6 +44,27 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
       "customer-capture-form"
     );
 
+    console.log("formSelector", formSelector);
+
+    ValidForm(formSelector, {
+      customMessages: {
+        valueMissing: "Enter something, plz",
+        patternMismatch: "Just give me a's and b's",
+        rangeOverflow: "Number too low!",
+        rangeUnderflow: "Number too high!",
+        stepMismatch: "Step doesn't fit into my notches!",
+        tooLong: "Text is too long",
+        tooShort: "Text is too short",
+        typeMismatch: "Hey, this isn't the correct type",
+        badInput: "Something bad happened",
+
+        // Special mismatches for different input types: `${type}Mismatch`
+        emailMismatch: "Hey, this isn't an email",
+        urlMismatch: "Not a URL :(",
+        numberMismatch: "Nope, not a number!"
+      }
+    });
+
     formSelector.addEventListener("submit", async event => {
       event.preventDefault();
 
@@ -59,15 +82,15 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
       console.log("response.json()", response.json());
     });
 
-    setTimeout(() => {
-      this._emailPrompt = this.shadowRoot.getElementById(
-        "email.address.prompt"
-      );
+    // setTimeout(() => {
+    //   this._emailPrompt = this.shadowRoot.getElementById(
+    //     "email.address.prompt"
+    //   );
 
-      this._emailPrompt.addEventListener("invalid", event => {
-        console.log("event", event);
-      });
-    }, 500);
+    //   this._emailPrompt.addEventListener("invalid", event => {
+    //     console.log("event", event);
+    //   });
+    // }, 500);
   }
 
   private async generateFormElement() {

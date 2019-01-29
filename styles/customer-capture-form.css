@@ -3,22 +3,38 @@ form {
   display: grid;
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
-  /* justify-items: end; */
+}
+
+.form-group {
+  align-items: center;
+  display: grid;
+  grid-template-areas: "label field" "description feedback";
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-group > * {
+  justify-content: start;
 }
 
 label {
-  grid-column: auto / span 1;
+  grid-area: label;
 }
 
 input,
 select,
 textarea {
-  grid-column: auto / span 1;
+  grid-area: field;
 }
 
-form p {
+.description {
   color: #666;
-  grid-column: auto / span 2;
+  font-size: 0.75rem;
+  grid-area: description;
+}
+
+.validation-error {
+  color: #ff0000;
+  grid-area: feedback;
   font-size: 0.75rem;
 }
 
@@ -146,7 +162,7 @@ select:focus {
   outline-color: #008000 !important;
 }
 
-:valid:not(:placeholder-shown) + p::before {
+/* :valid:not(:placeholder-shown) + p::before {
   content: "✓";
   display: block;
-}
+} */
