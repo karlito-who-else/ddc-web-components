@@ -28,21 +28,17 @@ const options = {
 //   .init(options);
 
 const i18nextApp = i18next.createInstance();
-i18nextApp.use(XHRBackend).init(options, (err, t) => {
+i18nextApp.use(XHRBackend).init(options, err => {
   if (err) {
     console.error(err);
   }
-
-  console.log(t("app:title")); // key in common namespace
 });
 
 const i18nextCustomer = i18next.createInstance();
-i18nextCustomer.use(XHRBackend).init(options, (err, t) => {
+i18nextCustomer.use(XHRBackend).init(options, err => {
   if (err) {
     console.error(err);
   }
-
-  console.log(t("app:title")); // key in common namespace
 });
 
 export { i18nextApp, i18nextCustomer };
