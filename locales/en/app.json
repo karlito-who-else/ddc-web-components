@@ -1,0 +1,11 @@
+{
+  "title": "Hello",
+  "content": "This is en content",
+  "language": {
+    "en": "(en-GB) English",
+    "en-GB": "(en-GB) English (British)",
+    "en-US": "(en-GB) English (American)",
+    "ar": "(en-GB) Arabic",
+    "ar-SA": "(en-GB) Arabic (SA)"
+  }
+}

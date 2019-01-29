@@ -118,27 +118,26 @@ const getTextareaMarkup = properties => html`
   </div>
 `;
 
-export const jsonSchemaToFormMarkup = (
-  schema: JSONSchema4,
-  customerLanguage: string
-) => {
+export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
   const dereferenced = dereference(schema);
 
   let fields: TemplateResult[] = [];
+
+  // console.log(i18nextCustomer.language);
 
   for (var property in dereferenced.properties) {
     const id = property;
 
     const description = i18nextCustomer.t(
-      `customer-capture-form:${property}.description`,
-      { lng: customerLanguage }
+      `customer-capture-form:${property}.description`
     );
     const label = i18nextCustomer.t(`customer-capture-form:${property}.label`);
     const placeholder = i18nextCustomer.t(
-      `customer-capture-form:${property}.placeholder`,
-      { lng: customerLanguage }
+      `customer-capture-form:${property}.placeholder`
     );
     const title = i18nextCustomer.t(`customer-capture-form:${property}.title`);
+
+    // console.log("title", title);
 
     const required = dereferenced.required.includes(property)
       ? true

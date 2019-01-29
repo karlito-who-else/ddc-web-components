@@ -47,5 +47,11 @@
       "placeholder": "enter your last name",
       "title": "last name"
     }
+  },
+  "region": {
+    "description": "enter your region",
+    "label": "region",
+    "placeholder": "enter your region",
+    "title": "enter your region"
   }
 }

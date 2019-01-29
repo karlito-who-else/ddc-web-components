@@ -49,5 +49,11 @@
       "placeholder": "أدخل اسمك الأخير",
       "title": "الكنية"
     }
+  },
+  "region": {
+    "description": "أدخل منطقتك",
+    "label": "منطقة",
+    "placeholder": "أدخل منطقتك",
+    "title": "أدخل منطقتك"
   }
 }

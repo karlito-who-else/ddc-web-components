@@ -44,8 +44,6 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
       "customer-capture-form"
     );
 
-    console.log("formSelector", formSelector);
-
     ValidForm(formSelector, {
       customMessages: {
         valueMissing: "Enter something, plz",
@@ -109,7 +107,7 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
   private async generateFormFieldElements() {
     const schema = await this.loadFormSchema();
 
-    const markup = jsonSchemaToFormMarkup(schema, i18nextCustomer.language);
+    const markup = jsonSchemaToFormMarkup(schema);
 
     return markup;
   }
