@@ -114,7 +114,11 @@ select:focus {
   border-width: 5px;
 }
 
-:invalid {
+:in-range:not(:placeholder-shown) {
+  outline-color: #008000 !important;
+}
+
+:invalid:not(:placeholder-shown) {
   outline-color: #dc143c !important;
 }
 
@@ -122,10 +126,27 @@ select:focus {
   outline-style: dashed;
 }
 
+:out-of-range:not(:placeholder-shown) {
+  outline-color: #dc143c !important;
+}
+
+:read-only {
+  outline-color: #333 !important;
+}
+
+:read-write {
+  outline-color: #000 !important;
+}
+
 :required {
   background-color: #f3f3f3;
 }
 
-:valid {
+:valid:not(:placeholder-shown) {
   outline-color: #008000 !important;
+}
+
+:valid:not(:placeholder-shown) + p::before {
+  content: "✓";
+  display: block;
 }
