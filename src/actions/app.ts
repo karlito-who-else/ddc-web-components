@@ -2,7 +2,7 @@ import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store.js";
 
-import { i18next } from "../localisation.js";
+import { i18nextApp, i18nextCustomer } from "../localisation.js";
 
 export const UPDATE_PAGE = "UPDATE_PAGE";
 export const UPDATE_OFFLINE = "UPDATE_OFFLINE";
@@ -123,14 +123,12 @@ export const updateDrawerState: ActionCreator<AppActionUpdateDrawerState> = (
 };
 
 export const updateAppLanguage: ActionCreator<AppActionUpdateAppLanguage> = (
-  appLanguage: string = "en"
+  appLanguage: string
 ) => {
-  i18next.changeLanguage(appLanguage, (error, t) => {
+  i18nextApp.changeLanguage(appLanguage, error => {
     if (error) {
       return console.log("something went wrong loading", error);
     }
-
-    t("title"); // -> same as i18next.t
   });
 
   return {
@@ -141,13 +139,11 @@ export const updateAppLanguage: ActionCreator<AppActionUpdateAppLanguage> = (
 
 export const updateCustomerLanguage: ActionCreator<
   AppActionUpdateCustomerLanguage
-> = (customerLanguage: string = "en") => {
-  i18next.changeLanguage(customerLanguage, (error, t) => {
+> = (customerLanguage: string) => {
+  i18nextCustomer.changeLanguage(customerLanguage, error => {
     if (error) {
       return console.log("something went wrong loading", error);
     }
-
-    t("title"); // -> same as i18next.t
   });
 
   return {

@@ -5,11 +5,7 @@ import { ifDefined } from "lit-html/directives/if-defined";
 import { repeat } from "lit-html/directives/repeat";
 
 import { dereference } from "./jst";
-import { i18next } from "./localisation.js";
-
-i18next.on("languageChanged", lng => {
-  console.info("languageChanged", lng);
-});
+import { i18nextCustomer } from "./localisation.js";
 
 const getDatalistMarkup = properties => html`
   <datalist id="${properties!.id}-list">
@@ -17,14 +13,34 @@ const getDatalistMarkup = properties => html`
   </datalist>
 `;
 
+const getDefaultMarkup = properties =>
+  html`
+    <span
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      id="${properties!.id}"
+      >borked: ${properties!.label}</span
+    >
+    ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
+  `;
+
 const getDescriptionMarkup = properties =>
   html`
     <p
       class="${ifDefined(properties!.properties!.class!.const)}"
-      data-description-for="${properties.id}"
+      data-for="${properties.id}"
     >
       ${properties.description}
     </p>
+  `;
+
+const getFeedbackMarkup = properties =>
+  html`
+    <div
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      data-for="${properties!.id}"
+    >
+      Feedback
+    </div>
   `;
 
 const getInputMarkup = properties => {
@@ -45,9 +61,18 @@ const getInputMarkup = properties => {
       type="${ifDefined(properties!.properties!.type!.const)}"
     />
     ${list ? getDatalistMarkup(properties) : undefined}
-    ${getDescriptionMarkup(properties)}
+    ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
   `;
 };
+
+const getLabelMarkup = properties =>
+  html`
+    <label
+      class="${ifDefined(properties!.properties!.class!.const)}"
+      for="${properties!.id}"
+      >${properties!.label}</label
+    >
+  `;
 
 const getOptionsMarkup = (properties: {
   enum: Array<{ text: string; value: string }>;
@@ -75,27 +100,8 @@ const getSelectMarkup = properties => html`
   >
     ${getOptionsMarkup(properties)}
   </select>
-  ${getDescriptionMarkup(properties)}
+  ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
 `;
-
-const getDefaultMarkup = properties =>
-  html`
-    <span
-      class="${ifDefined(properties!.properties!.class!.const)}"
-      id="${properties!.id}"
-      >borked: ${properties!.label}</span
-    >
-    ${getDescriptionMarkup(properties)}
-  `;
-
-const getLabelMarkup = properties =>
-  html`
-    <label
-      class="${ifDefined(properties!.properties!.class!.const)}"
-      for="${properties!.id}"
-      >${properties!.label}</label
-    >
-  `;
 
 const getTextareaMarkup = properties => html`
   ${getLabelMarkup(properties)}<textarea
@@ -108,10 +114,13 @@ const getTextareaMarkup = properties => html`
     title="${ifDefined(properties!.title)}"
     type="${ifDefined(properties!.properties!.type!.const)}"
   ></textarea>
-  ${getDescriptionMarkup(properties)}
+  ${getDescriptionMarkup(properties)}${getFeedbackMarkup(properties)}
 `;
 
-export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
+export const jsonSchemaToFormMarkup = (
+  schema: JSONSchema4,
+  customerLanguage: string
+) => {
   const dereferenced = dereference(schema);
 
   let fields: TemplateResult[] = [];
@@ -119,14 +128,16 @@ export const jsonSchemaToFormMarkup = (schema: JSONSchema4) => {
   for (var property in dereferenced.properties) {
     const id = property;
 
-    const description = i18next.t(
-      `customer-capture-form:${property}.description`
+    const description = i18nextCustomer.t(
+      `customer-capture-form:${property}.description`,
+      { lng: customerLanguage }
     );
-    const label = i18next.t(`customer-capture-form:${property}.label`);
-    const placeholder = i18next.t(
-      `customer-capture-form:${property}.placeholder`
+    const label = i18nextCustomer.t(`customer-capture-form:${property}.label`);
+    const placeholder = i18nextCustomer.t(
+      `customer-capture-form:${property}.placeholder`,
+      { lng: customerLanguage }
     );
-    const title = i18next.t(`customer-capture-form:${property}.title`);
+    const title = i18nextCustomer.t(`customer-capture-form:${property}.title`);
 
     const required = dereferenced.required.includes(property)
       ? true

@@ -1,28 +1,17 @@
 import { LitElement, html, property, TemplateResult } from "lit-element";
 
-import { connect } from "pwa-helpers/connect-mixin.js";
-
 import "@polymer/iron-dropdown/iron-dropdown.js";
 
 import { SharedStyles } from "./shared-styles.js";
 
-import { i18next, localize } from "../localisation.js";
-import { store, RootState } from "../store.js";
+import { i18nextApp, localize } from "../localisation.js";
 
-class SampleElementConnected extends connect(store)(LitElement) {}
-
-class SampleElement extends localize(i18next)(SampleElementConnected) {
+class SampleElement extends localize(i18nextApp)(LitElement) {
   @property({ type: Boolean })
   private _opened = false;
 
   @property({ type: Boolean })
   private _openButtonHidden = false;
-
-  @property({ type: String })
-  private _appLanguage = "en";
-
-  @property({ type: String })
-  private _customerLanguage = "en";
 
   @property({ type: Boolean })
   private _nameLastRomajiHidden = true;
@@ -78,7 +67,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
         ?hidden="${this._openButtonHidden}"
         @click="${this._openButtonClicked}"
       >
-        Open the dropdown to show "${i18next.t("title")}" text
+        Open the dropdown to show "${i18nextApp.t("title")}" text
       </button>
       <iron-dropdown
         id="dropdown"
@@ -87,26 +76,26 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
         ?opened=${this._opened}
       >
         <div slot="dropdown-content">
-          ${i18next.t("content", { lng: this._customerLanguage })}
+          ${i18nextApp.t("content", { lng: this._customerLanguage })}
         </div>
       </iron-dropdown>
 
       <div
         class="app"
-        dir="${i18next.dir(this._appLanguage)}"
+        dir="${i18nextApp.dir(this._appLanguage)}"
         lang="${this._appLanguage}"
       >
         <h1>App section</h1>
-        <p dir="${i18next.dir(this._appLanguage)}">
+        <p dir="${i18nextApp.dir(this._appLanguage)}">
           App language: ${this._appLanguage}
         </p>
-        <p dir="${i18next.dir(this._customerLanguage)}">
+        <p dir="${i18nextApp.dir(this._customerLanguage)}">
           Customer language: ${this._customerLanguage}
         </p>
 
         <div
           class="customer"
-          dir="${i18next.dir(this._customerLanguage)}"
+          dir="${i18nextApp.dir(this._customerLanguage)}"
           lang="${this._customerLanguage}"
         >
           <h1>Customer section</h1>
@@ -114,13 +103,13 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
             <input
               id="name-first"
               name="name-first"
-              placeholder="${i18next.t("form.name-first")}"
+              placeholder="${i18nextApp.t("form.name-first")}"
               type="text"
             />
             <input
               id="name-last"
               name="name-last"
-              placeholder="${i18next.t("form.name-last")}"
+              placeholder="${i18nextApp.t("form.name-last")}"
               type="text"
             />
             <input
@@ -133,11 +122,11 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
             <input
               id="email"
               name="email"
-              placeholder="${i18next.t("form.email")}"
+              placeholder="${i18nextApp.t("form.email")}"
               type="email"
             />
             <label for="date-of-birth-alternate"
-              >${i18next.t("form.date-of-birth.label")}</label
+              >${i18nextApp.t("form.date-of-birth.label")}</label
             >
             <input
               id="date-of-birth-alternate"
@@ -148,11 +137,11 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
               value="2018-07-22"
             />
             <fieldset>
-              <legend>${i18next.t("form.date-of-birth.label")}</legend>
+              <legend>${i18nextApp.t("form.date-of-birth.label")}</legend>
               <div id="date-of-birth">
                 <div id="day-wrapper">
                   <label for="day">
-                    ${i18next.t("form.date-of-birth.day")}
+                    ${i18nextApp.t("form.date-of-birth.day")}
                   </label>
                   <select id="day" name="day">
                     <option value="1">1</option>
@@ -190,7 +179,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
                 </div>
                 <div id="month-wrapper">
                   <label for="month"
-                    >${i18next.t("form.date-of-birth.month")}</label
+                    >${i18nextApp.t("form.date-of-birth.month")}</label
                   >
                   <select id="month" name="month">
                     <option value="January">January</option>
@@ -209,7 +198,7 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
                 </div>
                 <div id="year-wrapper">
                   <label for="year"
-                    >${i18next.t("form.date-of-birth.year")}</label
+                    >${i18nextApp.t("form.date-of-birth.year")}</label
                   >
                   <select id="year" name="year">
                     <option value="2014">2014</option>
@@ -335,11 +324,6 @@ class SampleElement extends localize(i18next)(SampleElementConnected) {
         </div>
       </div>
     `;
-  }
-
-  stateChanged(state: RootState) {
-    this._appLanguage = state.app!.appLanguage;
-    this._customerLanguage = state.app!.customerLanguage;
   }
 }
 

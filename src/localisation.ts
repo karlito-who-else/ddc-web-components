@@ -5,30 +5,38 @@ import XHRBackend from "i18next-xhr-backend"; // fallback xhr load
 
 let _i18nextInitialized = false;
 
-i18next
-  // .use(ChainedBackend)
-  .use(XHRBackend)
-  .init({
-    fallbackLng: "en",
-    // debug: true,
-    ns: ["app", "customer-capture-form", "general"],
-    // ns: ["app"],
-    // defaultNS: "app",
-    backend: {
-      loadPath: "locales/{{lng}}/{{ns}}.json"
-      // backends: [
-      //   LocalStorageBackend, // primary
-      //   XHRBackend // fallback
-      // ],
-      // backendOptions: [
-      //   {
-      //     loadPath: `/locales/{{lng}}/{{ns}}.json`
-      //   }
-      // ]
-    }
-  });
+const options = {
+  fallbackLng: "en",
+  // debug: true,
+  ns: ["app", "customer-capture-form", "general"],
+  // ns: ["app"],
+  // defaultNS: "app",
+  backend: {
+    loadPath: "locales/{{lng}}/{{ns}}.json"
+    // backends: [
+    //   LocalStorageBackend, // primary
+    //   XHRBackend // fallback
+    // ],
+    // backendOptions: [
+    //   {
+    //     loadPath: `/locales/{{lng}}/{{ns}}.json`
+    //   }
+    // ]
+  }
+};
 
-export { i18next };
+// i18next
+//   .use(ChainedBackend)
+//   .use(XHRBackend)
+//   .init(options);
+
+const i18nextApp = i18next.createInstance();
+i18nextApp.use(XHRBackend).init(options);
+
+const i18nextCustomer = i18next.createInstance();
+i18nextCustomer.init(options);
+
+export { i18nextApp, i18nextCustomer };
 
 export const localize = i18next => baseElement =>
   class extends baseElement {

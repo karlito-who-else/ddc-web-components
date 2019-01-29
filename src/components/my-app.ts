@@ -12,13 +12,7 @@ import { SharedStyles } from "./shared-styles.js";
 import { store, RootState } from "../store.js";
 
 // These are the actions needed by this element.
-import {
-  navigate,
-  updateOffline,
-  updateDrawerState,
-  updateAppLanguage,
-  updateCustomerLanguage
-} from "../actions/app.js";
+import { navigate, updateOffline, updateDrawerState } from "../actions/app.js";
 
 // The following line imports the type only - it will be removed by tsc so
 // another import for app-drawer.js is required below.
@@ -32,11 +26,11 @@ import "@polymer/app-layout/app-toolbar/app-toolbar.js";
 import { menuIcon } from "./my-icons.js";
 import "./snack-bar.js";
 
-import { i18next, localize } from "../localisation.js";
+import { i18nextApp, i18nextCustomer, localize } from "../localisation.js";
 
 class MyAppConnected extends connect(store)(LitElement) {}
 
-class MyApp extends localize(i18next)(MyAppConnected) {
+class MyApp extends localize(i18nextApp)(MyAppConnected) {
   protected render() {
     // Anything that's related to rendering should be done in here.
     return html`
@@ -89,6 +83,7 @@ class MyApp extends localize(i18next)(MyAppConnected) {
             id="app-language-selector"
             @change="${this._appLanguageSelectChanged}"
           >
+            <option selected value="en">English</option>
             <option value="en-GB">English (British)</option>
             <option value="en-US">English (American)</option>
             <option value="ar-SA">Arabic (Saudi Arabia)</option>
@@ -99,6 +94,7 @@ class MyApp extends localize(i18next)(MyAppConnected) {
             id="customer-language-selector"
             @change="${this._customerLanguageSelectChanged}"
           >
+            <option selected value="unset">Use App Language</option>
             <option value="en-GB">English (British)</option>
             <option value="en-US">English (American)</option>
             <option value="ar-SA">Arabic (Saudi Arabia)</option>
@@ -129,14 +125,17 @@ class MyApp extends localize(i18next)(MyAppConnected) {
         ></my-view404>
       </main>
 
-      <footer><p>&copy; brand name</p></footer>
+      <footer>
+        <p>&copy; brand name</p>
+        <p>
+          <span>App language is ${this._appLanguage}</span> /
+          <span>Customer language is ${this._customerLanguage}</span>
+        </p>
+      </footer>
 
       <snack-bar ?active="${this._snackbarOpened}">
         You are now ${this._offline ? "offline" : "online"}.</snack-bar
       >
-
-      <span>App language is ${this._appLanguage}</span>
-      <span>Customer language is ${this._customerLanguage}</span>
     `;
   }
 
@@ -159,7 +158,7 @@ class MyApp extends localize(i18next)(MyAppConnected) {
   private _appLanguage = "en";
 
   @property({ type: String })
-  private _customerLanguage = "en";
+  private _customerLanguage = "unset";
 
   constructor() {
     super();
@@ -167,6 +166,8 @@ class MyApp extends localize(i18next)(MyAppConnected) {
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
+
+    this._appLanguageUpdated(this._appLanguage);
   }
 
   protected firstUpdated() {
@@ -199,20 +200,38 @@ class MyApp extends localize(i18next)(MyAppConnected) {
   }
 
   private _appLanguageUpdated(language) {
-    store.dispatch(updateAppLanguage(language));
+    i18nextApp.changeLanguage(language, error => {
+      if (error) {
+        return console.log("something went wrong loading", error);
+      }
+
+      console.info("i18nextApp languageChanged", language);
+      this._appLanguage = language;
+    });
+
+    this._customerLanguageUpdated(this._customerLanguage);
   }
 
   private _customerLanguageUpdated(language) {
-    store.dispatch(updateCustomerLanguage(language));
+    language = language === "unset" ? i18nextApp.language : language;
+
+    i18nextCustomer.changeLanguage(language, error => {
+      if (error) {
+        return console.log("something went wrong loading", error);
+      }
+
+      console.info("i18nextCustomer languageChanged", language);
+      this.customerLanguage = language;
+    });
   }
 
   private _appLanguageSelectChanged(event) {
-    // console.log("event", event);
+    this._appLanguage = event.target.value;
     this._appLanguageUpdated(event.target.value);
   }
 
   private _customerLanguageSelectChanged(event) {
-    // console.log("event", event);
+    this._customerLanguage = event.target.value;
     this._customerLanguageUpdated(event.target.value);
   }
 
@@ -221,8 +240,6 @@ class MyApp extends localize(i18next)(MyAppConnected) {
     this._offline = state.app!.offline;
     this._snackbarOpened = state.app!.snackbarOpened;
     this._drawerOpened = state.app!.drawerOpened;
-    this._appLanguage = state.app!.appLanguage;
-    this._customerLanguage = state.app!.customerLanguage;
   }
 }
 

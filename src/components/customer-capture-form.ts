@@ -1,31 +1,22 @@
 import { LitElement, html, property, TemplateResult } from "lit-element";
 
-import { connect } from "pwa-helpers/connect-mixin.js";
-
 import { SharedStyles } from "./shared-styles.js";
 
-import { i18next, localize } from "../localisation.js";
-import { store, RootState } from "../store.js";
+import { i18nextCustomer, localize } from "../localisation.js";
 
 import { jsonSchemaToFormMarkup } from "../json-schema-to-form-markup.js";
 
-class CustomerCaptureFormConnected extends connect(store)(LitElement) {}
+class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
+  @property({ type: HTMLElement })
+  private _form;
 
-class CustomerCaptureForm extends localize(i18next)(
-  CustomerCaptureFormConnected
-) {
   @property({ type: TemplateResult })
   private _formFields;
-
-  @property({ type: HTMLElement })
-  private _formElement;
 
   private constructor() {
     super();
 
-    this.renderForm();
-
-    this.addValidation();
+    this.setupForm();
   }
 
   public render(): TemplateResult {
@@ -39,62 +30,26 @@ class CustomerCaptureForm extends localize(i18next)(
           padding: 2rem;
         }
       </style>
-      <form
-        dir="${i18next.dir(this._customerLanguage)}"
-        id="customer-capture-form"
-        method="POST"
-      >
-        ${this._formFields} <button>Submit</button>
-      </form>
+      <h1>This is set by appLanguage</h1>
+      ${this._form}
     `;
   }
 
-  private renderForm: Function = async () => {
+  private async addValidation() {
     await this.updateComplete;
 
-    this._formFields = await this.formFields();
+    const formSelector = this.shadowRoot.getElementById(
+      "customer-capture-form"
+    );
 
-    i18next.on("languageChanged", () => {
-      this.renderForm();
-    });
-  };
-
-  get updateComplete() {
-    return (async () => {
-      return await super.updateComplete;
-    })();
-  }
-
-  async loadFormSchema() {
-    const response = await fetch("schemas/customer-capture-form.json");
-
-    const json = await response.json();
-
-    return json;
-  }
-
-  async formFields() {
-    const schema = await this.loadFormSchema();
-
-    const markup = jsonSchemaToFormMarkup(schema);
-
-    return markup;
-  }
-
-  private addValidation: Function = async () => {
-    await this.updateComplete;
-
-    this._formElement = this.shadowRoot.getElementById("customer-capture-form");
-
-    this._formElement.addEventListener("submit", async event => {
+    formSelector.addEventListener("submit", async event => {
       event.preventDefault();
 
-      // const valid = event.path[0].checkValidity();
-      const valid = this._formElement.checkValidity();
+      const valid = formSelector.checkValidity();
+
       console.log("valid", valid);
 
-      // const formData = new FormData(event.path[0]);
-      const formData = new FormData(this._formElement);
+      const formData = new FormData(formSelector);
 
       const response = await fetch("http://localhost:8081/myForm", {
         method: "POST",
@@ -113,11 +68,55 @@ class CustomerCaptureForm extends localize(i18next)(
         console.log("event", event);
       });
     }, 500);
-  };
+  }
 
-  stateChanged(state: RootState) {
-    this._appLanguage = state.app!.appLanguage;
-    this._customerLanguage = state.app!.customerLanguage;
+  private async generateFormElement() {
+    return html`
+      <form
+        dir="${i18nextCustomer.dir(i18nextCustomer.language)}"
+        id="customer-capture-form"
+        lang="${i18nextCustomer.language}"
+        method="POST"
+      >
+        ${this._formFields} <button>Submit</button>
+      </form>
+    `;
+  }
+
+  private async generateFormFieldElements() {
+    const schema = await this.loadFormSchema();
+
+    const markup = jsonSchemaToFormMarkup(schema, i18nextCustomer.language);
+
+    return markup;
+  }
+
+  private async loadFormSchema() {
+    const response = await fetch("schemas/customer-capture-form.json");
+
+    const json = await response.json();
+
+    return json;
+  }
+
+  private async setupForm() {
+    await this.updateComplete;
+
+    this._formFields = await this.generateFormFieldElements();
+
+    this._form = await this.generateFormElement();
+
+    i18nextCustomer.on("languageChanged", () => {
+      this.setupForm();
+    });
+
+    await this.addValidation();
+  }
+
+  get updateComplete() {
+    return (async () => {
+      return await super.updateComplete;
+    })();
   }
 }
 

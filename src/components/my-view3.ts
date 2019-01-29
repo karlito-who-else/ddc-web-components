@@ -1,31 +1,22 @@
 import { html } from "lit-element";
 
-import { connect } from "pwa-helpers/connect-mixin.js";
-
 import { PageViewElement } from "./page-view-element.js";
 
 import { SharedStyles } from "./shared-styles.js";
 
-import { i18next, localize } from "../localisation.js";
-import { store, RootState } from "../store.js";
+import { i18nextApp, localize } from "../localisation.js";
 
-class MyView3Connected extends connect(store)(PageViewElement) {}
-
-class MyView3 extends localize(i18next)(MyView3Connected) {
+class MyView3 extends localize(i18nextApp)(PageViewElement) {
   protected render() {
     return html`
-      ${SharedStyles} <style></style>
-      <section>
-        <h2>Static page 3</h2>
-        <p>This is a text-only page.</p>
-        <p>It doesn't do anything other than display some static text.</p>
-      </section>
+      ${SharedStyles}
+      <style>
+        sample-element {
+          width: 100%;
+        }
+      </style>
+      <sample-element></sample-element>
     `;
-  }
-
-  stateChanged(state: RootState) {
-    this._appLanguage = state.app!.appLanguage;
-    this._customerLanguage = state.app!.customerLanguage;
   }
 }
 
