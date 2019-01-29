@@ -202,7 +202,7 @@ class MyApp extends localize(i18nextApp)(MyAppConnected) {
   private _appLanguageUpdated(language) {
     i18nextApp.changeLanguage(language, error => {
       if (error) {
-        return console.log("something went wrong loading", error);
+        return console.error("something went wrong loading", error);
       }
 
       console.info("i18nextApp languageChanged", language);
@@ -217,7 +217,7 @@ class MyApp extends localize(i18nextApp)(MyAppConnected) {
 
     i18nextCustomer.changeLanguage(language, error => {
       if (error) {
-        return console.log("something went wrong loading", error);
+        return console.error("something went wrong loading", error);
       }
 
       console.info("i18nextCustomer languageChanged", language);
