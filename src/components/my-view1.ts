@@ -12,10 +12,6 @@ class MyView1 extends localize(i18nextApp)(PageViewElement) {
   protected render() {
     return html`
       ${SharedStyles}
-      <style>
-        customer-capture-form {
-        }
-      </style>
       <customer-capture-form></customer-capture-form>
     `;
   }

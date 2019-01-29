@@ -4,21 +4,30 @@ import ValidForm from "@pageclip/valid-form";
 
 import { SharedStyles } from "./shared-styles.js";
 
-import { i18nextCustomer, localize } from "../localisation.js";
+import { i18nextApp, i18nextCustomer, localize } from "../localisation.js";
 
 import { jsonSchemaToFormMarkup } from "../json-schema-to-form-markup.js";
 
-class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
+class CustomerCaptureForm extends localize(i18nextApp, i18nextCustomer)(
+  LitElement
+) {
   @property({ type: HTMLElement })
   private _form;
 
-  @property({ type: TemplateResult })
-  private _formFields;
+  // @property({ type: TemplateResult })
+  // private _formFields;
+
+  @property({ type: String })
+  private _title = i18nextApp.t("app:title");
 
   private constructor() {
     super();
 
     this.setupForm();
+
+    i18nextCustomer.on("languageChanged", () => {
+      this.updateElement();
+    });
   }
 
   public render(): TemplateResult {
@@ -32,7 +41,7 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
           padding: 2rem;
         }
       </style>
-      <h1>This is set by appLanguage</h1>
+      <h1>${this._title}</h1>
       ${this._form}
     `;
   }
@@ -79,19 +88,12 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
 
       console.log("response.json()", response.json());
     });
-
-    // setTimeout(() => {
-    //   this._emailPrompt = this.shadowRoot.getElementById(
-    //     "email.address.prompt"
-    //   );
-
-    //   this._emailPrompt.addEventListener("invalid", event => {
-    //     console.log("event", event);
-    //   });
-    // }, 500);
   }
 
   private async generateFormElement() {
+    const response = await fetch("schemas/customer-capture-form.json");
+    const schema = await response.json();
+
     return html`
       <form
         dir="${i18nextCustomer.dir(i18nextCustomer.language)}"
@@ -99,39 +101,22 @@ class CustomerCaptureForm extends localize(i18nextCustomer)(LitElement) {
         lang="${i18nextCustomer.language}"
         method="POST"
       >
-        ${this._formFields} <button>Submit</button>
+        ${jsonSchemaToFormMarkup(schema)} <button>Submit</button>
       </form>
     `;
-  }
-
-  private async generateFormFieldElements() {
-    const schema = await this.loadFormSchema();
-
-    const markup = jsonSchemaToFormMarkup(schema);
-
-    return markup;
-  }
-
-  private async loadFormSchema() {
-    const response = await fetch("schemas/customer-capture-form.json");
-
-    const json = await response.json();
-
-    return json;
   }
 
   private async setupForm() {
     await this.updateComplete;
 
-    this._formFields = await this.generateFormFieldElements();
-
     this._form = await this.generateFormElement();
 
-    i18nextCustomer.on("languageChanged", () => {
-      this.setupForm();
-    });
-
     await this.addValidation();
+  }
+
+  private async updateElement() {
+    this._form = await this.generateFormElement();
+    this._title = i18nextApp.t("app:title");
   }
 
   get updateComplete() {

@@ -17,54 +17,56 @@ const options = {
     // ]
   },
   // debug: true,
-  // defaultNS: "app",
   fallbackLng: "en",
-  ns: ["app", "customer-capture-form", "general"]
+  ns: ["app", "customer-capture-form"]
 };
 
-// i18next
-//   .use(ChainedBackend)
-//   .use(XHRBackend)
-//   .init(options);
-
 const i18nextApp = i18next.createInstance();
-i18nextApp.use(XHRBackend).init(options, err => {
-  if (err) {
-    console.error(err);
-  }
-});
+i18nextApp
+  // .use(ChainedBackend)
+  .use(XHRBackend)
+  .init(Object.assign({ instanceName: "i18nextApp" }, options), err => {
+    if (err) {
+      console.error(err);
+    }
+  });
 
 const i18nextCustomer = i18next.createInstance();
-i18nextCustomer.use(XHRBackend).init(options, err => {
-  if (err) {
-    console.error(err);
-  }
-});
+i18nextCustomer
+  // .use(ChainedBackend)
+  .use(XHRBackend)
+  .init(Object.assign({ instanceName: "i18nextCustomer" }, options), err => {
+    if (err) {
+      console.error(err);
+    }
+  });
 
 export { i18nextApp, i18nextCustomer };
 
-export const localize = i18next => baseElement =>
+export const localize = (...i18nextInstances) => baseElement =>
   class extends baseElement {
-    private _i18nextInitialized = false;
-
     _shouldRender(props, changedProps, old) {
       console.log("old", old);
       // Also check active property used by PageViewElement
-      return changedProps && changedProps.active
-        ? props.active && this._i18nextInitialized
-        : this._i18nextInitialized;
+      return changedProps && changedProps.active ? props.active : true;
     }
 
     connectedCallback() {
-      if (!this._i18nextInitialized) {
-        i18next.on("initialized", () => {
-          this._i18nextInitialized = true;
+      i18nextInstances.forEach(i18nextInstance => {
+        i18nextInstance.on("initialized", () => {
           this.requestUpdate();
         });
-      }
+      });
 
-      i18next.on("languageChanged", () => {
-        this.requestUpdate();
+      i18nextInstances.forEach(i18nextInstance => {
+        i18nextInstance.on("languageChanged", () => {
+          // console.info(
+          //   `Language changed on ${
+          //     i18nextInstance.options.instanceName
+          //   } instance`
+          // );
+          this.requestUpdate();
+        });
       });
 
       if (super.connectedCallback) {

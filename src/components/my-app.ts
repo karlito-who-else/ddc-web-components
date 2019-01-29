@@ -205,7 +205,7 @@ class MyApp extends localize(i18nextApp)(MyAppConnected) {
         return console.error("something went wrong loading", error);
       }
 
-      console.info("i18nextApp languageChanged", language);
+      // console.info("i18nextApp languageChanged", language);
       this._appLanguage = language;
     });
 
@@ -220,7 +220,7 @@ class MyApp extends localize(i18nextApp)(MyAppConnected) {
         return console.error("something went wrong loading", error);
       }
 
-      console.info("i18nextCustomer languageChanged", language);
+      // console.info("i18nextCustomer languageChanged", language);
       this.customerLanguage = language;
     });
   }

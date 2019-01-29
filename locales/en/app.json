@@ -1,11 +1,14 @@
 {
-  "title": "Hello",
+  "title": "Welcome",
   "content": "This is en content",
+  "figure": {
+    "alt": "Lighthouse picture"
+  },
   "language": {
-    "en": "(en-GB) English",
-    "en-GB": "(en-GB) English (British)",
-    "en-US": "(en-GB) English (American)",
-    "ar": "(en-GB) Arabic",
-    "ar-SA": "(en-GB) Arabic (SA)"
+    "en": "(en) English",
+    "en-GB": "(en) English (British)",
+    "en-US": "(en) English (American)",
+    "ar": "(en) Arabic",
+    "ar-SA": "(en) Arabic (SA)"
   }
 }
